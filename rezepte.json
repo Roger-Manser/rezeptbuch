@@ -182,7 +182,7 @@
       "name": "Thurgauer Apfeltorte",
       "cat": "Dessert",
       "portions": 4,
-      "img": "bilder/thurgauer-apfeltorte.jpg",
+      "time": 45,
       "ings": [
         {
           "q": "150",
@@ -235,8 +235,8 @@
           "n": "Zucker zum Bestreuen"
         }
       ],
-      "steps": "1. Butter in eine Schüssel geben. Zucker, Zitronenschale, -saft und 1 Prise Salz mit den Schwingbesen des Handrührgeräts darunterrühren. Eigelbe einzeln darunterrühren und weiterrühren, bis die Masse heller ist.\n\n2. Eiweisse mit 1 Prise Salz steif schlagen. Mehl und Backpulver mischen, lagenweise mit dem Eischnee auf die Masse geben und mit dem Gummischaber sorgfältig darunterziehen. Teig in die vorbereitete Form füllen.\n\n3. Apfelhälften sehr fein einschneiden (sie sollen noch zusammenhalten), auf dem Teig verteilen, Zucker darüberstreuen.\n\n4. Backen: ca. 45 Min. in der Mitte des auf 200 Grad vorgeheizten Ofens. Herausnehmen, etwas abkühlen, Formenrand entfernen, auf einem Gitter auskühlen.\n\nBackzeit: ca. 45 Min.",
-      "time": 45,
+      "steps": "1. Butter in eine Schüssel geben. Zucker, Zitronenschale, -saft und 1 Prise Salz mit den Schwingbesen des Handrührgeräts darunterrühren. Eigelbe einzeln darunterrühren und weiterrühren, bis die Masse heller ist.\n\n2. Eiweisse mit 1 Prise Salz steif schlagen. Mehl und Backpulver mischen, lagenweise mit dem Eischnee auf die Masse geben und mit dem Gummischaber sorgfältig darunterziehen. Teig in die vorbereitete Form füllen.\n\n3. Apfelhälften sehr fein einschneiden (sie sollen noch zusammenhalten), auf dem Teig verteilen, Zucker darüberstreuen.\n\n4. Backen: ca. 45 Min. in der Mitte des auf 180 Grad vorgeheizten Ofens. Herausnehmen, etwas abkühlen, Formenrand entfernen, auf einem Gitter auskühlen.\n\nBackzeit: ca. 45 Min.",
+      "img": "bilder/thurgauer-apfeltorte.jpg",
       "src": "Betty Bossi"
     },
     {
