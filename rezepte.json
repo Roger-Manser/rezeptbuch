@@ -11204,6 +11204,107 @@
       "steps": "1. Zwiebel und Knoblauch schälen, fein hacken.\n\n2. Öl in einer Pfanne warm werden lassen. Zwiebel und Knoblauch andämpfen. Risotto und Safran beigeben, unter Rühren dünsten, bis er glasig ist. Die Hälfte des Weins dazugiessen, vollständig einkochen, restlichen Wein dazugiessen, vollständig einkochen. Bouillon unter häufigem Rühren nach und nach dazugiessen, sodass der Reis immer knapp mit Flüssigkeit bedeckt ist, ca. 20 Min. köcheln, bis der Reis cremig und al dente ist.\n\n3. Käse und Öl unter den Reis mischen, würzen.\n\nNährwerte pro Portion (1/4): 569 kcal, F 15 g, Kh 77 g, E 12 g",
       "img": "bilder/risotto-milanese-safranrisotto.jpg",
       "src": "Betty Bossi"
+    },
+    {
+      "name": "Auberginen-Burger",
+      "cat": "Wochenende",
+      "portions": 4,
+      "time": 50,
+      "ings": [
+        {
+          "q": "1",
+          "u": "dl",
+          "n": "Wasser"
+        },
+        {
+          "q": "1.5",
+          "u": "EL",
+          "n": "Olivenöl"
+        },
+        {
+          "q": "2",
+          "u": "EL",
+          "n": "Tomatenpüree"
+        },
+        {
+          "q": "3",
+          "u": "EL",
+          "n": "Aceto balsamico"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Knoblauchzehe, gepresst (Marinade)"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "Kreuzkümmel­pulver"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "Paprika edelsüss"
+        },
+        {
+          "q": "0.5",
+          "u": "TL",
+          "n": "Salz (Marinade)"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Aubergine, in 4 Scheiben"
+        },
+        {
+          "q": "4",
+          "u": "Stück",
+          "n": "Burger-Brötli, halbiert"
+        },
+        {
+          "q": "100",
+          "u": "g",
+          "n": "Crème fraîche"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Knoblauchzehe, gepresst (Sauce)"
+        },
+        {
+          "q": "0.5",
+          "u": "Bund",
+          "n": "Schnittlauch, fein geschnitten"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "Zitronensaft"
+        },
+        {
+          "q": "0.5",
+          "u": "TL",
+          "n": "Salz (Sauce)"
+        },
+        {
+          "q": "4",
+          "u": "Stück",
+          "n": "Eisbergsalatblätter, zerzupft"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Tomate, in Scheiben"
+        },
+        {
+          "q": "2",
+          "u": "EL",
+          "n": "Chili Crunch"
+        }
+      ],
+      "steps": "1. Auberginen: Wasser und alle Zutaten bis und mit Salz in eine Grill- oder Aluschale mit Deckel geben und gut verrühren. Auberginenscheiben beigeben und in der Marinade wenden. Grillschale mit dem Deckel verschliessen.\n\n2. Grillieren (Holzkohle-, Gas-, Elektrogrill): Auberginen bei geschlossenem Deckel über mittelstarker Glut bzw. bei mittlerer Stufe (ca. 200 °C) ca. 20 Min. grillieren. Brötli beidseitig je ca. 1 Min. mitgrillieren. Beides vom Grill nehmen und etwas abkühlen lassen.\n\n3. Sauce: Crème fraîche und alle Zutaten bis und mit Salz in ein Schälchen geben und verrühren.\n\n4. Burger: Sauce auf den Schnittflächen der Brötli verteilen. Salat und Tomate auf den Brötliböden verteilen, Auberginenscheiben darauf anrichten. Chili Crunch darüberträufeln, Brötlideckel darauflegen.\n\nNährwert: ca. 465 kcal pro Stück.",
+      "img": "bilder/auberginen-burger.jpg",
+      "src": ""
     }
   ]
 }
