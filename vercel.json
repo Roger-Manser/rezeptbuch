@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/fetch-recipe.js": {
+      "maxDuration": 15
+    }
+  }
+}
