@@ -49,7 +49,11 @@ export default async function handler(req, res) {
     }
 
     const html = await response.text();
-    const limitedHtml = html.substring(0, 8000); // Limit für AI-Input
+    const limitedHtml = html.substring(0, 20000); // Erhöht auf 20000 für bessere Datenextraktion
+
+    // Debug-Logging
+    console.log('[RECIPE-FETCH] Original HTML-Größe:', html.length, 'chars');
+    console.log('[RECIPE-FETCH] Begrenzt auf:', limitedHtml.length, 'chars');
 
     // 2. Sende zu Anthropic API für Rezept-Extraktion
     const aiResponse = await fetch('https://api.anthropic.com/v1/messages', {
@@ -64,45 +68,45 @@ export default async function handler(req, res) {
         max_tokens: 1000,
         messages: [{
           role: 'user',
-          content: `Du bist ein Rezept-Parsing-Experte. Extrahiere EXAKT aus diesem HTML - keine Interpretationen, keine Schätzungen.
+          content: `Du bist ein Rezept-Parsing-Experte. Extrahiere EXAKT aus diesem HTML.
 
-KRITISCHE REGELN - STRIKTE EINHALTUNG ERFORDERLICH:
+KRITISCHE REGELN - STRIKTE EINHALTUNG:
 
-1. "name": Der HAUPTREZEPTTITEL (nicht Menü, nicht Seitentitel, nicht Links)
-   - FALSCH: "Fisch marinieren" wenn das ein Link ist
-   - RICHTIG: Der größte, fettgedruckte Rezepttitel auf der Seite
+1. "name": Der Hauptrezepttitel (größter, fettgedruckter Text im Rezept)
 
-2. "portions": IMMER einen Wert extrahieren! Such nach:
-   - "4 Portionen" / "4 Personen" / "Für 4" / "Yield: 4" / "Servings: 4"
-   - Extrahiere: "4 Portionen" (Zahl + Einheit)
-   - WENN NICHTS GEFUNDEN: "4 Stück" oder "1 Rezept" aber NICHT leer!
+2. "portions": IMMER ein Wert! Such nach: "Portionen", "Personen", "Für X", "Servings", "Yield"
+   Format: "4 Portionen" oder "4 Stück" oder "1 Rezept"
 
-3. "ingredients": EXAKTE Mengen kopieren (keine Runden!):
-   - 400 g - NICHT 500 g!
-   - 4 Stück - NICHT 5 Stück!
-   - Alle Zutaten mit exakten Mengen
+3. "ingredients": LISTE mit Zutaten
+   - WICHTIG: Such nach Listenmarkern oder Zeilennummern vor den Zutaten
+   - Format: [{"quantity": "400", "unit": "g", "name": "Fischfilet"}]
+   - Gib ALLE Zutaten an - auch wenn keine Mengenangabe, dann quantity: "", unit: ""
+   - MINIMUM 1 Zutat - wenn du keine findest, schreib: [{"quantity": "", "unit": "", "name": "Keine Zutaten gefunden"}]
 
-4. "steps": NUR Zubereitungsschritte (1, 2, 3...)
-   - Keine Tipps, keine Hinweise
-   - Nur die Schritte zum Kochen
+4. "steps": LISTE der Zubereitungsschritte
+   - Format: ["Schritt 1", "Schritt 2", "Schritt 3"]
+   - Suche nach Nummern (1., 2., 3.) oder Absatztrennungen
+   - MINIMUM 1 Schritt - wenn du keine findest, schreib: ["Keine Schritte gefunden"]
 
-5. "source": Website-Name (z.B. "fooby.ch")
+5. "time_prep", "time_cook": Zahlen oder 0 wenn nicht gefunden
 
-BEISPIEL-OUTPUT (EXAKT diesem Format folgen):
+6. "source": Website-Domain (z.B. "fooby.ch")
+
+BEISPIEL (EXAKT dieses Format):
 {
   "name": "Fisch marinieren",
   "portions": "4 Portionen",
-  "time_prep": 0,
-  "time_cook": 0,
+  "time_prep": 15,
+  "time_cook": 30,
   "ingredients": [
     {"quantity": "400", "unit": "g", "name": "Fischfilet Royal"},
-    {"quantity": "4", "unit": "Stück", "name": "Limetten, Saft"}
+    {"quantity": "4", "unit": "Stück", "name": "Limetten"}
   ],
-  "steps": ["Limetten pressen", "Fisch in Schüssel geben"],
+  "steps": ["Limetten pressen", "Fisch marinieren"],
   "source": "fooby.ch"
 }
 
-Antworte AUSSCHLIESSLICH mit gültigem JSON (kein Markdown, keine Backticks)!
+WICHTIG: Antworte NUR mit JSON - kein Markdown, kein Text davor/danach!
 
 HTML:
 ${limitedHtml}`
@@ -120,17 +124,38 @@ ${limitedHtml}`
     const aiData = await aiResponse.json();
     const content = aiData.content[0].text;
 
+    // Debug: KI-Antwort loggen
+    console.log('[RECIPE-FETCH] KI-Antwort (raw):', content);
+    console.log('[RECIPE-FETCH] KI-Antwort-Länge:', content.length);
+
     // 3. Versuche JSON zu parsen
     let recipe;
     try {
       recipe = JSON.parse(content);
+      console.log('[RECIPE-FETCH] JSON erfolgreich geparst:', recipe);
     } catch (e) {
+      console.error('[RECIPE-FETCH] JSON Parse-Fehler:', e.message);
+      console.log('[RECIPE-FETCH] Versuche Regex-Match...');
       const jsonMatch = content.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
+        console.error('[RECIPE-FETCH] Keine JSON in KI-Antwort gefunden');
         return res.status(400).json({ error: 'Could not parse recipe from AI' });
       }
-      recipe = JSON.parse(jsonMatch[0]);
+      try {
+        recipe = JSON.parse(jsonMatch[0]);
+        console.log('[RECIPE-FETCH] JSON nach Regex erfolgreich geparst:', recipe);
+      } catch (e2) {
+        console.error('[RECIPE-FETCH] Auch Regex-JSON konnte nicht geparst werden:', e2.message);
+        return res.status(400).json({ error: 'Could not parse extracted JSON from AI' });
+      }
     }
+
+    // Final validation
+    console.log('[RECIPE-FETCH] Final recipe object:');
+    console.log('  - name:', recipe.name);
+    console.log('  - portions:', recipe.portions);
+    console.log('  - ingredients:', recipe.ingredients?.length || 0, 'items');
+    console.log('  - steps:', recipe.steps?.length || 0, 'items');
 
     return res.status(200).json({ recipe });
 
