@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=7.5">
+<link rel="manifest" href="manifest.json?v=7.6">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -242,7 +242,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.5</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.6</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -474,11 +474,18 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '7.5';
+const VERSION = '7.6';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'7.6', d:'2026-10-10', items:[
+    '🐛 API-Key Speicher-Bug gefixt',
+    'URL-Import läuft jetzt sofort (nicht mehr nach 1-2 Sekunden stecken)',
+    'Ursache: Code suchte nach falscher localStorage-Schlüssel',
+    'Import nutzt jetzt korrekt "rezeptbuchAiKey" statt "aiKey"',
+    'Alle Website-Importe sollten jetzt zuverlässig funktionieren'
+  ]},
   {v:'7.5', d:'2026-10-10', items:[
     '🚀 Backend-Proxy Support (empfohlen!)',
     'Setze BACKEND_PROXY_URL = "deine-vercel-url" für 100% zuverlässige Funktionalität',
@@ -1194,7 +1201,7 @@ async function importRecipeFromUrl(){
     status.textContent='🤖 AI analysiert Website...';
     
     // 2. An Anthropic API senden
-    const aiKey=localStorage.getItem('aiKey');
+    const aiKey=localStorage.getItem('rezeptbuchAiKey');
     if(!aiKey){ toast('API-Key nicht konfiguriert'); return; }
     
     const apiResponse=await fetch('https://api.anthropic.com/v1/messages',{
