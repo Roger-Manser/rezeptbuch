@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=7.4">
+<link rel="manifest" href="manifest.json?v=7.5">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -242,7 +242,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.4</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.5</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -474,8 +474,18 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '7.4';
+const VERSION = '7.5';
+// OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
+// Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
+const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'7.5', d:'2026-10-10', items:[
+    '🚀 Backend-Proxy Support (empfohlen!)',
+    'Setze BACKEND_PROXY_URL = "deine-vercel-url" für 100% zuverlässige Funktionalität',
+    'Fallback auf CORS-Proxies wenn Backend nicht konfiguriert',
+    'Inkl. Vercel-Konfiguration für einfachen Deploy',
+    'Siehe PROXY-SETUP.md für Anleitung'
+  ]},
   {v:'7.4', d:'2026-10-10', items:[
     '🛡️ CORS-Proxy Fallback Chain implementiert',
     'URL-Import nutzt jetzt 3 verschiedene CORS-Proxies',
@@ -1135,32 +1145,51 @@ async function importRecipeFromUrl(){
     btn.textContent='⏳ Website wird analysiert...';
     status.textContent='Bitte warten...';
     
-    // 1. Website fetchen (mit CORS-Proxy)
-    // Versuche mehrere Proxies als Fallback
-    const proxies=[
-      url=>`https://corsproxy.io/?${encodeURIComponent(url)}`,
-      url=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-      url=>`https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`
-    ];
-
+    // 1. Website fetchen - nutze Backend-Proxy wenn konfiguriert, sonst CORS-Proxy Fallback
     let html=null;
-    let lastError=null;
 
-    for(const proxyFn of proxies){
+    // OPTION A: Backend-Proxy (zuverlässig, wenn konfiguriert)
+    if(BACKEND_PROXY_URL){
       try{
-        const proxyUrl=proxyFn(url);
-        const response=await fetch(proxyUrl);
+        const response=await fetch(BACKEND_PROXY_URL,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({url})
+        });
         if(response.ok){
-          html=await response.text();
-          break;
+          const data=await response.json();
+          html=data.html;
         }
       }catch(e){
-        lastError=e;
-        continue;
+        console.warn('Backend-Proxy fehler, versuche Fallback:',e);
       }
     }
 
-    if(!html) throw new Error(lastError ? lastError.message : 'Alle CORS-Proxies konnten die Website nicht abrufen');
+    // OPTION B: CORS-Proxy Fallback (wenn Backend nicht konfiguriert)
+    if(!html){
+      const proxies=[
+        url=>`https://corsproxy.io/?${encodeURIComponent(url)}`,
+        url=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+        url=>`https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`
+      ];
+
+      let lastError=null;
+      for(const proxyFn of proxies){
+        try{
+          const proxyUrl=proxyFn(url);
+          const response=await fetch(proxyUrl);
+          if(response.ok){
+            html=await response.text();
+            break;
+          }
+        }catch(e){
+          lastError=e;
+          continue;
+        }
+      }
+
+      if(!html) throw new Error(lastError ? lastError.message : 'Alle Proxies konnten die Website nicht abrufen');
+    }
     
     status.textContent='🤖 AI analysiert Website...';
     
@@ -1846,7 +1875,7 @@ if(ghReady()) pullFromGitHub(false);
 else if(DB.src) syncFromSource(false);
 
 /* Service Worker für Installierbarkeit + Offline + Auto-Update + DEBUG */
-console.log('🍳 Rezeptbuch v7.4 - CORS-Proxy Fallback Chain - DEBUG MODE AKTIV');
+console.log('🍳 Rezeptbuch v7.5 - Backend Proxy Support - DEBUG MODE AKTIV');
 console.log('Browser supports Service Worker:', 'serviceWorker' in navigator);
 console.log('Current location:', window.location.href);
 
