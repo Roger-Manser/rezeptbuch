@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=8.5">
+<link rel="manifest" href="manifest.json?v=8.6">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -243,7 +243,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v8.5</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v8.6</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -475,11 +475,15 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '8.5';
+const VERSION = '8.6';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'8.6', d:'2026-10-10', items:[
+    '🔧 Portionen werden jetzt ins Rezept-Formular eingefüllt',
+    '✨ Fallback max_tokens auch auf 3000 erhöht (bei Browser-API-Calls)'
+  ]},
   {v:'8.5', d:'2026-10-10', items:[
     '🔧 max_tokens von 1000 → 3000 erhöht (KI-Responses waren abgeschnitten)',
     '✅ Größere Rezepte mit vielen Zutaten werden jetzt vollständig extrahiert'
@@ -1223,6 +1227,7 @@ async function importRecipeFromUrl(){
 
             // Form ausfüllen
             document.getElementById('rcName').value=recipe.name||'';
+            document.getElementById('rcPortions').value=recipe.portions||'';
             document.getElementById('rcSrc').value=recipe.source||'';
             document.getElementById('rcTime').value=recipe.time_cook||'';
 
@@ -1304,7 +1309,7 @@ async function importRecipeFromUrl(){
       },
       body:JSON.stringify({
         model:'claude-sonnet-4-6',
-        max_tokens:1000,
+        max_tokens:3000,
         messages:[{
           role:'user',
           content:`Extrahiere aus diesem HTML-Content ein Rezept. Analysiere verschiedene Website-Formate (Betty Bossi, Chefkoch, etc.).
