@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=7.1">
+<link rel="manifest" href="manifest.json?v=7.2">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -236,7 +236,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.1</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.2</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -468,8 +468,15 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '7.1';
+const VERSION = '7.2';
 const CHANGELOG = [
+  {v:'7.2', d:'2026-10-10', items:[
+    '🔧 CORS-Proxy Fix für URL-Import',
+    'Rezept-Import von Websites funktioniert jetzt ohne Fehler',
+    'Nutzt allorigins.win als CORS-Proxy für sichere Cross-Origin Fetches',
+    'Unterstützt jetzt mehr Websites: Betty Bossi, Chefkoch, etc.',
+    'Anthropic API erhält HTML-Content statt URL (robuster)'
+  ]},
   {v:'7.1', d:'2026-10-10', items:[
     '🖼️ Bilder werden jetzt als .webp optimiert (statt .jpg)',
     'Kleinere Dateigrösse: ~30-40% weniger Speicher!',
@@ -1108,8 +1115,9 @@ async function importRecipeFromUrl(){
     btn.textContent='⏳ Website wird analysiert...';
     status.textContent='Bitte warten...';
     
-    // 1. Website fetchen
-    const response=await fetch(url);
+    // 1. Website fetchen (mit CORS-Proxy)
+    const proxyUrl=`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    const response=await fetch(proxyUrl);
     if(!response.ok) throw new Error('Website nicht erreichbar');
     const html=await response.text();
     
@@ -1797,7 +1805,7 @@ if(ghReady()) pullFromGitHub(false);
 else if(DB.src) syncFromSource(false);
 
 /* Service Worker für Installierbarkeit + Offline + Auto-Update + DEBUG */
-console.log('🍳 Rezeptbuch v7.1 - .webp Image Optimization - DEBUG MODE AKTIV');
+console.log('🍳 Rezeptbuch v7.2 - URL-Import CORS Fix - DEBUG MODE AKTIV');
 console.log('Browser supports Service Worker:', 'serviceWorker' in navigator);
 console.log('Current location:', window.location.href);
 
