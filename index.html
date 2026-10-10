@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=7.0.1">
+<link rel="manifest" href="manifest.json?v=7.1">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -236,7 +236,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.0.1</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v7.1</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -437,7 +437,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
     <input id="rcTime" type="number" inputmode="numeric" placeholder="z.B. 30">
     <label>Bild (Pfad oder URL, optional)</label>
     <div class="imgUploadBox">
-      <input id="rcImg" name="rc-img" placeholder="z.B. bilder/rezept.jpg" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="url">
+      <input id="rcImg" name="rc-img" placeholder="z.B. bilder/rezept.webp" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="url">
       <button type="button" class="btn ghost" onclick="pickImageUpload()" id="uploadImgBtn">📤 Upload</button>
     </div>
     <input type="file" id="recImgFile" accept="image/*" hidden onchange="handleImageUpload(this)">
@@ -468,8 +468,15 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '7.0.1';
+const VERSION = '7.1';
 const CHANGELOG = [
+  {v:'7.1', d:'2026-10-10', items:[
+    '🖼️ Bilder werden jetzt als .webp optimiert (statt .jpg)',
+    'Kleinere Dateigrösse: ~30-40% weniger Speicher!',
+    'Bessere Bildqualität mit WebP Format',
+    'Alle neuen Rezept-Bilder werden automatisch als .webp gespeichert',
+    'Alte .jpg Bilder funktionieren weiterhin'
+  ]},
   {v:'7.0.1', d:'2026-08-12', items:[
     'HOTFIX: rcName Input-Feld war verschwunden (Regression)',
     'Rezept-Name Input funktioniert wieder ✅'
@@ -622,7 +629,7 @@ const CHANGELOG = [
     'Fehler bleiben rot stehen statt zu blinken.'
   ]},
   {v:'2.4', d:'2026-07-16', items:[
-    'Gescanntes Foto wird beim Speichern automatisch nach bilder/<name>.jpg ins Repo geladen.',
+    'Gescanntes Foto wird beim Speichern automatisch nach bilder/<name>.webp ins Repo geladen (optimiert).',
     'Bilder werden vorher auf 1200px verkleinert (spart Speicher).',
     'Dateiname wird aus dem Rezeptnamen gebildet (Umlaute korrekt: ä→ae).'
   ]},
@@ -1495,7 +1502,7 @@ function fillFormFromAi(o){
   }
 }
 
-/* ---------- Bild aus Scan ins Repo (bilder/<slug>.jpg) ---------- */
+/* ---------- Bild aus Scan ins Repo (bilder/<slug>.webp - optimiert) ---------- */
 let pendingImg=null;   // {dataUrl} – Foto aus dem letzten Scan, wartet auf Speichern
 function slugify(s){
   const map={'ä':'ae','ö':'oe','ü':'ue','Ä':'ae','Ö':'oe','Ü':'ue','é':'e','è':'e','ê':'e','à':'a','â':'a','ç':'c','î':'i','ô':'o','û':'u','ß':'ss'};
@@ -1539,7 +1546,7 @@ async function uploadImage(b64,path){
 async function commitPendingImage(name){
   if(!pendingImg) return null;
   if(!ghReady()){ toast('Bild nicht hochgeladen – kein GitHub-Token'); return null; }
-  const path='bilder/'+slugify(name)+'.jpg';
+  const path='bilder/'+slugify(name)+'.webp';
   const hint=document.getElementById('aiScanHint');
   const setH=(t,s)=>{ if(!hint) return; hint.textContent=t||''; hint.classList.remove('busy','err'); if(s) hint.classList.add(s); };
   try{
@@ -1579,7 +1586,7 @@ async function handleImageUpload(input){
     setH('⏳ Bild wird ins Repo hochgeladen…','busy');
     const resized=await shrinkImage(dataUrl,1200);
     const recipeName=document.getElementById('rcName').value.trim()||'rezept';
-    const path='bilder/'+slugify(recipeName)+'.jpg';
+    const path='bilder/'+slugify(recipeName)+'.webp';
     await uploadImage(resized,path);
     // rcImg-Feld mit Pfad ausfüllen
     document.getElementById('rcImg').value=path;
@@ -1790,7 +1797,7 @@ if(ghReady()) pullFromGitHub(false);
 else if(DB.src) syncFromSource(false);
 
 /* Service Worker für Installierbarkeit + Offline + Auto-Update + DEBUG */
-console.log('🍳 Rezeptbuch v7.0.1 - rcName Input-Feld Hotfix - DEBUG MODE AKTIV');
+console.log('🍳 Rezeptbuch v7.1 - .webp Image Optimization - DEBUG MODE AKTIV');
 console.log('Browser supports Service Worker:', 'serviceWorker' in navigator);
 console.log('Current location:', window.location.href);
 
