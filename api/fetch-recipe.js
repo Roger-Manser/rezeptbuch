@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     }
 
     const html = await response.text();
-    const limitedHtml = html.substring(0, 20000); // Erhöht auf 20000 für bessere Datenextraktion
+    const limitedHtml = html.substring(0, 50000); // Erhöht auf 50000 - manche Seiten haben Zutaten erst weiter unten!
 
     // Debug-Logging
     console.log('[RECIPE-FETCH] Original HTML-Größe:', html.length, 'chars');
@@ -70,29 +70,37 @@ export default async function handler(req, res) {
           role: 'user',
           content: `Du bist ein Rezept-Parsing-Experte. Extrahiere EXAKT aus diesem HTML.
 
-KRITISCHE REGELN - STRIKTE EINHALTUNG:
+SUCHSTRATEGIE (REIHENFOLGE WICHTIG):
+1. Strukturierte Daten: Suche nach JSON-LD (<script type="application/ld+json">) - RecipeSchema
+2. HTML-Attribute: data-*, aria-label, title mit Zutat/Schritt-Infos
+3. Normales HTML: Listen, divs mit Klasse "ingredient", "step", etc.
 
-1. "name": Der Hauptrezepttitel (größter, fettgedruckter Text im Rezept)
+KRITISCHE REGELN:
 
-2. "portions": IMMER ein Wert! Such nach: "Portionen", "Personen", "Für X", "Servings", "Yield"
+1. "name": Der Hauptrezepttitel (größter, fettgedruckter Text)
+
+2. "portions": IMMER ein Wert! Such nach: "Portionen", "Personen", "Für", "Servings", "Yield"
    Format: "4 Portionen" oder "4 Stück" oder "1 Rezept"
 
 3. "ingredients": LISTE mit Zutaten
-   - WICHTIG: Such nach Listenmarkern oder Zeilennummern vor den Zutaten
+   - Suche ÜBERALL: Listen, Tabellen, JSON-LD, Attribute
    - Format: [{"quantity": "400", "unit": "g", "name": "Fischfilet"}]
-   - Gib ALLE Zutaten an - auch wenn keine Mengenangabe, dann quantity: "", unit: ""
-   - MINIMUM 1 Zutat - wenn du keine findest, schreib: [{"quantity": "", "unit": "", "name": "Keine Zutaten gefunden"}]
+   - JEDE Zutat einzeln - auch ohne Mengenangabe (quantity: "", unit: "")
+   - WENN MEHRERE GEFUNDEN: Alle auflisten!
+   - MINIMUM: 3+ Zutaten für normales Rezept
+   - Nur "Keine Zutaten gefunden" wenn wirklich KEINE da sind
 
 4. "steps": LISTE der Zubereitungsschritte
    - Format: ["Schritt 1", "Schritt 2", "Schritt 3"]
-   - Suche nach Nummern (1., 2., 3.) oder Absatztrennungen
-   - MINIMUM 1 Schritt - wenn du keine findest, schreib: ["Keine Schritte gefunden"]
+   - Suche: Nummern (1., 2., 3.), Absätze, divs mit "step"
+   - MINIMUM: 2+ Schritte für normales Rezept
+   - Nur "Keine Schritte gefunden" wenn wirklich KEINE da sind
 
-5. "time_prep", "time_cook": Zahlen oder 0 wenn nicht gefunden
+5. "time_prep", "time_cook": Zahlen oder 0
 
 6. "source": Website-Domain (z.B. "fooby.ch")
 
-BEISPIEL (EXAKT dieses Format):
+BEISPIEL:
 {
   "name": "Fisch marinieren",
   "portions": "4 Portionen",
@@ -100,13 +108,14 @@ BEISPIEL (EXAKT dieses Format):
   "time_cook": 30,
   "ingredients": [
     {"quantity": "400", "unit": "g", "name": "Fischfilet Royal"},
-    {"quantity": "4", "unit": "Stück", "name": "Limetten"}
+    {"quantity": "4", "unit": "Stück", "name": "Limetten"},
+    {"quantity": "2", "unit": "EL", "name": "Öl"}
   ],
-  "steps": ["Limetten pressen", "Fisch marinieren"],
+  "steps": ["Limetten pressen", "Fisch marinieren", "20 Min ziehen lassen"],
   "source": "fooby.ch"
 }
 
-WICHTIG: Antworte NUR mit JSON - kein Markdown, kein Text davor/danach!
+WICHTIG: NUR JSON - kein Markdown, kein Text davor/danach!
 
 HTML:
 ${limitedHtml}`
