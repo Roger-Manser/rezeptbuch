@@ -125,28 +125,37 @@ ${limitedHtml}`
     const content = aiData.content[0].text;
 
     // Debug: KI-Antwort loggen
-    console.log('[RECIPE-FETCH] KI-Antwort (raw):', content);
+    console.log('[RECIPE-FETCH] KI-Antwort (raw):', content.substring(0, 500));
     console.log('[RECIPE-FETCH] KI-Antwort-Länge:', content.length);
 
-    // 3. Versuche JSON zu parsen
+    // 3. Entferne Markdown-Code-Blöcke wenn vorhanden
+    let cleanContent = content;
+    // Entferne ```json ... ``` oder ``` ... ```
+    cleanContent = cleanContent.replace(/^```(?:json)?\s*\n?/, '');
+    cleanContent = cleanContent.replace(/\n?```\s*$/, '');
+    cleanContent = cleanContent.trim();
+
+    console.log('[RECIPE-FETCH] Nach Markdown-Entfernung:', cleanContent.substring(0, 500));
+
+    // Versuche JSON zu parsen
     let recipe;
     try {
-      recipe = JSON.parse(content);
-      console.log('[RECIPE-FETCH] JSON erfolgreich geparst:', recipe);
+      recipe = JSON.parse(cleanContent);
+      console.log('[RECIPE-FETCH] JSON erfolgreich geparst');
     } catch (e) {
       console.error('[RECIPE-FETCH] JSON Parse-Fehler:', e.message);
-      console.log('[RECIPE-FETCH] Versuche Regex-Match...');
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      console.log('[RECIPE-FETCH] Versuche Regex-Match für {...}...');
+      const jsonMatch = cleanContent.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
-        console.error('[RECIPE-FETCH] Keine JSON in KI-Antwort gefunden');
-        return res.status(400).json({ error: 'Could not parse recipe from AI' });
+        console.error('[RECIPE-FETCH] Keine JSON Struktur gefunden');
+        return res.status(400).json({ error: 'Could not extract JSON from AI response' });
       }
       try {
         recipe = JSON.parse(jsonMatch[0]);
-        console.log('[RECIPE-FETCH] JSON nach Regex erfolgreich geparst:', recipe);
+        console.log('[RECIPE-FETCH] JSON nach Regex erfolgreich geparst');
       } catch (e2) {
-        console.error('[RECIPE-FETCH] Auch Regex-JSON konnte nicht geparst werden:', e2.message);
-        return res.status(400).json({ error: 'Could not parse extracted JSON from AI' });
+        console.error('[RECIPE-FETCH] Regex-JSON Parse-Fehler:', e2.message);
+        return res.status(400).json({ error: 'Could not parse JSON: ' + e2.message });
       }
     }
 
