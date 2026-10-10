@@ -11341,6 +11341,52 @@
       "steps": "1. Einmachgläser vorbereiten: Gläser, Deckel und evtl. Gummiringe waschen, heiss spülen. Zum Füllen in eine Pfanne mit 70 Grad heissem Wasser stellen, Pfannenboden mit einem Tuch belegen.\n\n2. Wasser und Zitronensaft in eine grosse Schüssel geben. Birnen sofort ins Zitronenwasser legen.\n\n3. Wasser, Zitronensaft, Zucker und Zimtstange aufkochen. Birnen portionenweise knapp weich kochen, mit dem Abtropflöffel satt bis 2 cm unter den Rand in das im Wasserbad stehende Glas füllen. Den Zuckersirup abseihen, nochmals aufkochen, bis zum Überlaufen ins Glas füllen, sofort verschliessen, auf isolierender Unterlage auskühlen.\n\n4. Gläser kontrollieren: nach dem Erkalten Klammer sorgfältig entfernen, der Glasdeckel muss fest sitzen (Vakuum), Klammer wieder befestigen. Bei Gläsern mit Metallschraubdeckel muss dieser nach unten gewölbt sein und auf Druck nicht nachgeben. Lässt sich ein Glas leicht öffnen, Inhalt aufkochen und erneut siedend heiss einfüllen.\n\nHinweise: Ergibt 2 Gläser von je ca. 5 dl. Haltbarkeit: kühl und dunkel, ca. 12 Monate. Einmal geöffnet, Glas im Kühlschrank aufbewahren, rasch konsumieren.\n\nNährwerte pro 100 g: 107 kcal | 0 g Fett | 26 g Kohlenhydrate | 0 g Eiweiss",
       "img": "bilder/eingemachte-birnen.webp",
       "src": "Betty Bossi"
+    },
+    {
+      "name": "Ceviche",
+      "cat": "Schnell",
+      "portions": null,
+      "time": null,
+      "ings": [
+        {
+          "q": "600",
+          "u": "g",
+          "n": "Fischfilet (z.B. Wolfsbarsch oder Lachs)"
+        },
+        {
+          "q": "4",
+          "u": "Stück",
+          "n": "Limetten, Saft"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "rote Zwiebel"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Chili"
+        },
+        {
+          "q": "1",
+          "u": "Bund",
+          "n": "Koriander"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Süsskartoffel"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salz und Pfeffer"
+        }
+      ],
+      "steps": "Fischfilet in kleine Würfel schneiden und in eine Schüssel geben.\nLimettensaft über den Fisch giessen und mindestens 15 Minuten marinieren lassen, bis der Fisch durch die Säure gegart ist.\nRote Zwiebel in feine Ringe schneiden, Chili entkernen und fein hacken.\nKoriander waschen und grob hacken.\nSüsskartoffel schälen, in Scheiben schneiden und kochen bis sie weich sind.\nFisch mit Zwiebel, Chili und Koriander vermengen, mit Salz und Pfeffer abschmecken.\nCeviche mit Süsskartoffelscheiben anrichten und sofort servieren.",
+      "img": "bilder/ceviche.webp",
+      "src": "fooby.ch"
     }
   ]
 }
