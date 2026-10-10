@@ -64,28 +64,45 @@ export default async function handler(req, res) {
         max_tokens: 1000,
         messages: [{
           role: 'user',
-          content: `Du bist Rezept-Extraktions-Experte. Deine Aufgabe: Extrahiere aus diesem HTML-Content EXAKT die Rezeptdaten.
+          content: `Du bist ein Rezept-Parsing-Experte. Extrahiere EXAKT aus diesem HTML - keine Interpretationen, keine Schätzungen.
 
-REGELN:
-1. Rezeptname EXAKT vom Hauptrezept (nicht von Überschriften/Links)
-2. Mengen MÜSSEN genau sein - kopiere sie exakt aus dem HTML
-3. Einheiten korrekt (g, ml, Stück, Bund, etc.)
-4. Zutaten in korrekter Reihenfolge
-5. Nur Zubereitungsschritte, keine Marketing-Texte
+KRITISCHE REGELN - STRIKTE EINHALTUNG ERFORDERLICH:
 
-Antworte AUSSCHLIESSLICH mit gültigem JSON (kein Markdown, keine Backticks):
+1. "name": Der HAUPTREZEPTTITEL (nicht Menü, nicht Seitentitel, nicht Links)
+   - FALSCH: "Fisch marinieren" wenn das ein Link ist
+   - RICHTIG: Der größte, fettgedruckte Rezepttitel auf der Seite
+
+2. "portions": IMMER einen Wert extrahieren! Such nach:
+   - "4 Portionen" / "4 Personen" / "Für 4" / "Yield: 4" / "Servings: 4"
+   - Extrahiere: "4 Portionen" (Zahl + Einheit)
+   - WENN NICHTS GEFUNDEN: "4 Stück" oder "1 Rezept" aber NICHT leer!
+
+3. "ingredients": EXAKTE Mengen kopieren (keine Runden!):
+   - 400 g - NICHT 500 g!
+   - 4 Stück - NICHT 5 Stück!
+   - Alle Zutaten mit exakten Mengen
+
+4. "steps": NUR Zubereitungsschritte (1, 2, 3...)
+   - Keine Tipps, keine Hinweise
+   - Nur die Schritte zum Kochen
+
+5. "source": Website-Name (z.B. "fooby.ch")
+
+BEISPIEL-OUTPUT (EXAKT diesem Format folgen):
 {
-  "name": "Rezeptname wie auf der Website",
-  "portions": "Portionen/Stücke als Text",
+  "name": "Fisch marinieren",
+  "portions": "4 Portionen",
   "time_prep": 0,
   "time_cook": 0,
   "ingredients": [
-    {"quantity": "400", "unit": "g", "name": "Fischfilet"},
-    {"quantity": "4", "unit": "Stück", "name": "Limetten"}
+    {"quantity": "400", "unit": "g", "name": "Fischfilet Royal"},
+    {"quantity": "4", "unit": "Stück", "name": "Limetten, Saft"}
   ],
-  "steps": ["Schritt 1 detailliert", "Schritt 2 detailliert"],
-  "source": "Websitename"
+  "steps": ["Limetten pressen", "Fisch in Schüssel geben"],
+  "source": "fooby.ch"
 }
+
+Antworte AUSSCHLIESSLICH mit gültigem JSON (kein Markdown, keine Backticks)!
 
 HTML:
 ${limitedHtml}`
