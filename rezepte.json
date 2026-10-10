@@ -11341,6 +11341,62 @@
       "steps": "1. Einmachgläser vorbereiten: Gläser, Deckel und evtl. Gummiringe waschen, heiss spülen. Zum Füllen in eine Pfanne mit 70 Grad heissem Wasser stellen, Pfannenboden mit einem Tuch belegen.\n\n2. Wasser und Zitronensaft in eine grosse Schüssel geben. Birnen sofort ins Zitronenwasser legen.\n\n3. Wasser, Zitronensaft, Zucker und Zimtstange aufkochen. Birnen portionenweise knapp weich kochen, mit dem Abtropflöffel satt bis 2 cm unter den Rand in das im Wasserbad stehende Glas füllen. Den Zuckersirup abseihen, nochmals aufkochen, bis zum Überlaufen ins Glas füllen, sofort verschliessen, auf isolierender Unterlage auskühlen.\n\n4. Gläser kontrollieren: nach dem Erkalten Klammer sorgfältig entfernen, der Glasdeckel muss fest sitzen (Vakuum), Klammer wieder befestigen. Bei Gläsern mit Metallschraubdeckel muss dieser nach unten gewölbt sein und auf Druck nicht nachgeben. Lässt sich ein Glas leicht öffnen, Inhalt aufkochen und erneut siedend heiss einfüllen.\n\nHinweise: Ergibt 2 Gläser von je ca. 5 dl. Haltbarkeit: kühl und dunkel, ca. 12 Monate. Einmal geöffnet, Glas im Kühlschrank aufbewahren, rasch konsumieren.\n\nNährwerte pro 100 g: 107 kcal | 0 g Fett | 26 g Kohlenhydrate | 0 g Eiweiss",
       "img": "bilder/eingemachte-birnen.webp",
       "src": "Betty Bossi"
+    },
+    {
+      "name": "Ceviche",
+      "cat": "Schnell",
+      "portions": null,
+      "time": null,
+      "ings": [
+        {
+          "q": "600",
+          "u": "g",
+          "n": "Wolfsbarschfilet (oder anderes weisses Fischfilet), in Würfeln"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "Salz"
+        },
+        {
+          "q": "1",
+          "u": "",
+          "n": "rote Zwiebel, in feinen Ringen"
+        },
+        {
+          "q": "1",
+          "u": "",
+          "n": "rote Chilischote, entkernt, fein gehackt"
+        },
+        {
+          "q": "1",
+          "u": "Bund",
+          "n": "Koriander, grob gehackt"
+        },
+        {
+          "q": "150",
+          "u": "ml",
+          "n": "Limettensaft (ca. 6 Limetten)"
+        },
+        {
+          "q": "2",
+          "u": "",
+          "n": "Süsskartoffeln, geschält, in Scheiben"
+        },
+        {
+          "q": "1",
+          "u": "EL",
+          "n": "Olivenöl"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "Salz"
+        }
+      ],
+      "steps": "Fisch mit Salz mischen und 5 Minuten stehen lassen.\nZwiebel, Chili und Koriander zum Fisch geben, mit Limettensaft bedecken und ca. 15 Minuten marinieren, bis der Fisch gar ist.\nSüsskartoffeln mit Olivenöl und Salz mischen, auf einem Backblech verteilen und im vorgeheizten Ofen bei 200 °C ca. 20 Minuten backen.\nCeviche mit den Süsskartoffelscheiben anrichten und servieren.",
+      "img": "bilder/ceviche.webp",
+      "src": "fooby.ch"
     }
   ]
 }
