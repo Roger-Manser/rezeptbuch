@@ -84,7 +84,11 @@ KRITISCHE REGELN:
 
 3. "ingredients": LISTE mit Zutaten
    - Suche ÜBERALL: Listen, Tabellen, JSON-LD, Attribute
-   - Format: [{"quantity": "400", "unit": "g", "name": "Fischfilet"}]
+   - Format: [{"quantity": "400", "unit": "g", "name": "Fischfilet, gehackt"}]
+   - WICHTIG: Kommentare/Anmerkungen IMMER im name-Feld mit dabei!
+     * "Limetten, gehackt" – NICHT nur "Limetten"
+     * "Fisch, frisch" – NICHT nur "Fisch"
+     * Alle Anmerkungen: gehackt, frisch, optional, nach Geschmack, etc.
    - JEDE Zutat einzeln - auch ohne Mengenangabe (quantity: "", unit: "")
    - WENN MEHRERE GEFUNDEN: Alle auflisten!
    - MINIMUM: 3+ Zutaten für normales Rezept
