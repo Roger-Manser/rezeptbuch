@@ -11341,6 +11341,52 @@
       "steps": "1. Einmachgläser vorbereiten: Gläser, Deckel und evtl. Gummiringe waschen, heiss spülen. Zum Füllen in eine Pfanne mit 70 Grad heissem Wasser stellen, Pfannenboden mit einem Tuch belegen.\n\n2. Wasser und Zitronensaft in eine grosse Schüssel geben. Birnen sofort ins Zitronenwasser legen.\n\n3. Wasser, Zitronensaft, Zucker und Zimtstange aufkochen. Birnen portionenweise knapp weich kochen, mit dem Abtropflöffel satt bis 2 cm unter den Rand in das im Wasserbad stehende Glas füllen. Den Zuckersirup abseihen, nochmals aufkochen, bis zum Überlaufen ins Glas füllen, sofort verschliessen, auf isolierender Unterlage auskühlen.\n\n4. Gläser kontrollieren: nach dem Erkalten Klammer sorgfältig entfernen, der Glasdeckel muss fest sitzen (Vakuum), Klammer wieder befestigen. Bei Gläsern mit Metallschraubdeckel muss dieser nach unten gewölbt sein und auf Druck nicht nachgeben. Lässt sich ein Glas leicht öffnen, Inhalt aufkochen und erneut siedend heiss einfüllen.\n\nHinweise: Ergibt 2 Gläser von je ca. 5 dl. Haltbarkeit: kühl und dunkel, ca. 12 Monate. Einmal geöffnet, Glas im Kühlschrank aufbewahren, rasch konsumieren.\n\nNährwerte pro 100 g: 107 kcal | 0 g Fett | 26 g Kohlenhydrate | 0 g Eiweiss",
       "img": "bilder/eingemachte-birnen.webp",
       "src": "Betty Bossi"
+    },
+    {
+      "name": "Ceviche",
+      "cat": "Schnell",
+      "portions": null,
+      "time": 120,
+      "ings": [
+        {
+          "q": "400",
+          "u": "g",
+          "n": "Dorschfilets Royal (MSC)"
+        },
+        {
+          "q": "2",
+          "u": "EL",
+          "n": "Korianderblättchen"
+        },
+        {
+          "q": "4",
+          "u": "",
+          "n": "Limetten . Limetten, wenig abgeriebene Schale und ganzer Saft (ergibt ca. 1 1/2 dl)"
+        },
+        {
+          "q": "1",
+          "u": "",
+          "n": "rote Zwiebeln, in feinen Ringen"
+        },
+        {
+          "q": "300",
+          "u": "g",
+          "n": "Süsskartoffeln, in ca. 3 cm grossen Würfeln"
+        },
+        {
+          "q": "¼",
+          "u": "TL",
+          "n": "Fleur de Sel"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salzwasser, siedend"
+        }
+      ],
+      "steps": "Limettenschale und -saft in einer Schüssel verrühren. Dorsch und Zwiebel beigeben, mischen, zugedeckt im Kühlschrank ca. 2 Std. marinieren, dabei 1-mal mischen.\nSüsskartoffeln im Salzwasser ca. 15 Min. knapp weich kochen. Wasser abgiessen. Süsskartoffeln mit dem Fisch, Korianderblättchen und Fleur de Sel mischen, anrichten.",
+      "img": "bilder/ceviche.webp",
+      "src": "fooby.ch"
     }
   ]
 }
