@@ -64,22 +64,30 @@ export default async function handler(req, res) {
         max_tokens: 1000,
         messages: [{
           role: 'user',
-          content: `Extrahiere aus diesem HTML-Content ein Rezept. Analysiere verschiedene Website-Formate (Betty Bossi, Chefkoch, etc.).
+          content: `Du bist Rezept-Extraktions-Experte. Deine Aufgabe: Extrahiere aus diesem HTML-Content EXAKT die Rezeptdaten.
+
+REGELN:
+1. Rezeptname EXAKT vom Hauptrezept (nicht von Überschriften/Links)
+2. Mengen MÜSSEN genau sein - kopiere sie exakt aus dem HTML
+3. Einheiten korrekt (g, ml, Stück, Bund, etc.)
+4. Zutaten in korrekter Reihenfolge
+5. Nur Zubereitungsschritte, keine Marketing-Texte
 
 Antworte AUSSCHLIESSLICH mit gültigem JSON (kein Markdown, keine Backticks):
 {
-  "name": "Rezeptname",
-  "portions": "Anzahl Portionen/Stücke",
-  "time_prep": Minuten als Zahl,
-  "time_cook": Minuten als Zahl,
+  "name": "Rezeptname wie auf der Website",
+  "portions": "Portionen/Stücke als Text",
+  "time_prep": 0,
+  "time_cook": 0,
   "ingredients": [
-    {"quantity": "Menge", "unit": "Einheit", "name": "Zutatname"}
+    {"quantity": "400", "unit": "g", "name": "Fischfilet"},
+    {"quantity": "4", "unit": "Stück", "name": "Limetten"}
   ],
-  "steps": ["Schritt 1", "Schritt 2"],
-  "source": "Website-Name"
+  "steps": ["Schritt 1 detailliert", "Schritt 2 detailliert"],
+  "source": "Websitename"
 }
 
-HTML-Content:
+HTML:
 ${limitedHtml}`
         }]
       })
