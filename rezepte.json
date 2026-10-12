@@ -11387,6 +11387,107 @@
       "steps": "Limettenschale und -saft in einer Schüssel verrühren. Dorsch und Zwiebel beigeben, mischen, zugedeckt im Kühlschrank ca. 2 Std. marinieren, dabei 1-mal mischen.\nSüsskartoffeln im Salzwasser ca. 15 Min. knapp weich kochen. Wasser abgiessen. Süsskartoffeln mit dem Fisch, Korianderblättchen und Fleur de Sel mischen, anrichten.",
       "img": "bilder/ceviche.webp",
       "src": "fooby.ch"
+    },
+    {
+      "name": "Capuns",
+      "cat": "Wochenende",
+      "portions": 4,
+      "time": 85,
+      "ings": [
+        {
+          "q": "300",
+          "u": "g",
+          "n": "Weissmehl"
+        },
+        {
+          "q": "3",
+          "u": "Stück",
+          "n": "frische Eier"
+        },
+        {
+          "q": "1",
+          "u": "dl",
+          "n": "Milch"
+        },
+        {
+          "q": "0.5",
+          "u": "dl",
+          "n": "Wasser"
+        },
+        {
+          "q": "0.25",
+          "u": "TL",
+          "n": "Salz"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Zwiebel, fein gehackt"
+        },
+        {
+          "q": "0.5",
+          "u": "Bund",
+          "n": "Petersilie, fein geschnitten"
+        },
+        {
+          "q": "0.5",
+          "u": "Bund",
+          "n": "Schnittlauch, fein geschnitten"
+        },
+        {
+          "q": "0.5",
+          "u": "Bund",
+          "n": "Pfefferminze, fein geschnitten"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Salsiz (z.B. Pro Montagna Grisoni), geschält, in Würfeli"
+        },
+        {
+          "q": "100",
+          "u": "g",
+          "n": "Speckwürfeli"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salzwasser, siedend"
+        },
+        {
+          "q": "20",
+          "u": "Stück",
+          "n": "Mangoldblätter"
+        },
+        {
+          "q": "2",
+          "u": "dl",
+          "n": "Milch"
+        },
+        {
+          "q": "1",
+          "u": "dl",
+          "n": "Fleischbouillon"
+        },
+        {
+          "q": "100",
+          "u": "g",
+          "n": "Alpkäse (z.B. Pro Montagna), grob gerieben"
+        },
+        {
+          "q": "60",
+          "u": "g",
+          "n": "Speckwürfeli"
+        },
+        {
+          "q": "40",
+          "u": "g",
+          "n": "Bündnerfleisch, in feinen Streifen"
+        }
+      ],
+      "steps": "1. Teig: Mehl und alle Zutaten (Eier, Milch, Wasser, Salz) in einer Schüssel geben, mischen und zugedeckt ca. 30 Min. quellen lassen.\n\n2. Füllung: Zwiebel mit Petersilie, Schnittlauch, Pfefferminze, Salsiz-Würfeli und Speckwürfeli mischen, dann unter den Teig mischen.\n\n3. Mangoldblätter: Blätter portionenweise je ca. 1 Min. in siedendem Salzwasser blanchieren, herausnehmen, kurz in kaltes Wasser legen, abtropfen lassen, auf einem Tuch auslegen und trocken tupfen. Je 1–2 Esslöffel Füllung auf ein Blatt geben, seitliche Blattränder einschlagen, aufrollen und in eine gefettete ofenfeste Form (ca. 2,5 Liter) legen.\n\n4. Capuns: Milch und Bouillon aufkochen. Heiss über die Capuns giessen. Käse darüberstreuen. Ca. 25 Min. in der Mitte des auf 200 °C vorgeheizten Ofens backen.\n\n5. Speckkrümel: Speckwürfeli und Bündnerfleisch in einer Bratpfanne ohne Fett knusprig braten und über die fertigen Capuns streuen.\n\nNährwerte pro Person: Fett 45 g, Kohlenhydrate 61 g, Eiweiss 50 g, ca. 860 kcal.",
+      "img": "bilder/capuns.webp",
+      "src": "fooby.ch/de/rezepte/13978/"
     }
   ]
 }
