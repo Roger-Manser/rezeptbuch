@@ -11549,6 +11549,107 @@
       "steps": "Quitten mit Apfel- und Zitronensaft aufkochen, Hitze reduzieren, zugedeckt ca. 20 Min. weich köcheln. Quitten mit der Flüssigkeit pürieren, durch ein Sieb streichen.\nEigelb, Zucker und Zimt rühren, bis die Masse heller ist. Die noch warme Quittenmasse darunter rühren, auskühlen.\nEiweiss steif schlagen, mit dem Rahm sorgfältig unter die Masse ziehen. Die Mousse zugedeckt ca. 2 Std. kühl stellen.\nRahm in einer Pfanne warm werden lassen, Schokolade beigeben, unter Rühren schmelzen.",
       "img": "bilder/quittenmousse-auf-schokoladespiegel.webp",
       "src": "bettybossi.ch"
+    },
+    {
+      "name": "Filet Stroganoff by Andreas Caminada",
+      "cat": "Schnell",
+      "portions": 2,
+      "time": 30,
+      "ings": [
+        {
+          "q": "200",
+          "u": "g",
+          "n": "Rindsfilet, in Würfel geschnitten"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salz, Pfeffer"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Gulaschgewürz Atelier Caminada"
+        },
+        {
+          "q": "6",
+          "u": "Stück",
+          "n": "Champignons, geviertelt oder gesechstelt, je nach Größe"
+        },
+        {
+          "q": "2",
+          "u": "Stück",
+          "n": "Schalotten, fein gehackt"
+        },
+        {
+          "q": "0.5",
+          "u": "Stück",
+          "n": "roter Peperoni, in Streifen geschnitten"
+        },
+        {
+          "q": "1",
+          "u": "Scheibe",
+          "n": "Saftschinken, in feine Juliennes geschnitten"
+        },
+        {
+          "q": "2",
+          "u": "EL",
+          "n": "edelsüsses Paprikapulver"
+        },
+        {
+          "q": "1",
+          "u": "EL",
+          "n": "Tomatenmark"
+        },
+        {
+          "q": "3",
+          "u": "EL",
+          "n": "Cognac"
+        },
+        {
+          "q": "1",
+          "u": "EL",
+          "n": "Senf, evt. Sambal Oeleck"
+        },
+        {
+          "q": "80",
+          "u": "ml",
+          "n": "Rindsbouillon"
+        },
+        {
+          "q": "80",
+          "u": "ml",
+          "n": "Rindsbouillon"
+        },
+        {
+          "q": "80",
+          "u": "ml",
+          "n": "Rahm"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Butter zum Braten und Binden"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Crème fraîche"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Essigurke, in feine Juliennes geschnitten"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Etwas Schnittlauch, fein geschnitten"
+        }
+      ],
+      "steps": "1. Das Fleisch mit Salz, Pfeffer, Gulaschgewürz würzen und in einer Pfanne kurz anbraten.\n2. Aus der Pfanne nehmen, etwas Butter in dieselbe Pfanne geben und die Champignons und Schalotten darin anbraten.\n3. Peronistreifen und Schinken Juliennes dazugeben, abschmecken.\n4. Paprikapulver und Tomatenmark dazugeben und anrösten.\n5. Mit Cognac ablöschen, Senf (und nach Belieben Sambal Oeleck) dazugeben und das Ganze einreduzieren lassen.\n6. Mit Bouillon und Jus aufgiessen und mit etwas Butter binden.\n7. Den Rahm einrühren und alles bis zur gewünschten Konsistenz einkochen.\n8. Zum Schluss das angebratene Fleisch in der Sauce erwärmen, so, dass es medium serviert werden kann.\n9. Beim Anrichten noch etwas Crème fraîche auf das Stroganoff geben und mit den Juliennes der Essigurke und etwas Schnittlauch garnieren. Dazu Nüdeli servieren.",
+      "img": "bilder/filet-stroganoff-by-andreas-caminada.webp",
+      "src": "gaultmillau.ch"
     }
   ]
 }
