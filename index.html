@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=9.11">
+<link rel="manifest" href="manifest.json?v=9.12">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -248,7 +248,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.11</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.12</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -431,8 +431,8 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
       <button class="btn ghost" style="flex:1;margin-top:0" onclick="pickScan('camera')">📷 Foto scannen</button>
       <button class="btn ghost" style="flex:1;margin-top:0" onclick="pickScan('file')">📄 Foto/PDF wählen</button>
     </div>
-    <input type="file" id="aiFileCam" accept="image/*" capture="environment" style="display:none" onchange="handleScanFile(this)">
-    <input type="file" id="aiFile" accept="image/*,application/pdf" style="display:none" onchange="handleScanFile(this)">
+    <input type="file" id="aiFileCam" accept="image/*" capture="environment" style="display:none" multiple onchange="handleScanFile(this)">
+    <input type="file" id="aiFile" accept="image/*,application/pdf" style="display:none" multiple onchange="handleScanFile(this)">
     <div class="hint" id="aiScanHint" style="margin:-6px 0 10px"></div>
     <label>Name</label>
     <div style="display:flex;gap:8px;margin-bottom:16px">
@@ -452,7 +452,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
       <input id="rcImg" name="rc-img" placeholder="z.B. bilder/rezept.webp" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="url" onclick="event.stopPropagation()">
       <button type="button" class="btn ghost" onclick="pickImageUpload()" id="uploadImgBtn">📤 Upload</button>
     </div>
-    <input type="file" id="recImgFile" accept="image/*" hidden onchange="handleImageUpload(this)">
+    <input type="file" id="recImgFile" accept="image/*" hidden multiple onchange="handleImageUpload(this)">
     <img id="rcImgPreview" class="imgPreview" alt="" hidden>
     <div class="hint" id="imgUploadHint" style="margin-top:6px"></div>
     <label>Herkunft / Quelle (optional)</label>
@@ -480,11 +480,17 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '9.11';
+const VERSION = '9.12';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'9.12', d:'2026-10-18', items:[
+    '📸 MULTI-FILE UPLOAD: Mehrere Bilder/PDFs gleichzeitig!',
+    '🎯 Alle Dateien kombiniert zur AI senden (Rezept-Extraktion)',
+    '⚡ max_tokens erhöht: 2500 → 3000 (für komplexere Rezepte)',
+    '✅ Unterstützt: Bilder (JPG/PNG), PDFs, mehrfach hochladen'
+  ]},
   {v:'9.11', d:'2026-10-18', items:[
     '⚖️ Balanced: 60000 → 70000 Zeichen HTML (goldene Mitte)',
     '⚖️ max_tokens: 2000 → 2500 (mehr Detail in AI Response)',
@@ -1750,11 +1756,11 @@ function fileToBase64(file){
 const AI_PROMPT = 'Du erhältst die Vorlage eines Kochrezepts (Foto oder PDF). Extrahiere das Rezept und antworte AUSSCHLIESSLICH mit einem JSON-Objekt, ohne Vortext, ohne Erklärung, ohne Markdown-Backticks.\n\nSchema:\n{"name":"Titel des Gerichts","cat":"Schnell|Wochenende|Beilage|Dessert","portions":4,"time":30,"src":"Quelle falls erkennbar, sonst leer","ings":[{"q":"500","u":"g","n":"Zutat"}],"steps":"Zubereitung"}\n\nRegeln:\n- Schweizer Hochdeutsch, immer "ss" statt "ß" (also Weisswein, gross, Nüsse).\n- cat: "Schnell" bei <=30 Min Hauptgericht, "Wochenende" bei aufwändigeren Hauptgerichten, "Beilage" für Salate/Saucen/Beilagen, "Dessert" für Süsses. Rate sinnvoll, lasse cat nie leer.\n- time: Gesamtzeit in Minuten als Zahl (nur Ziffern). Wenn unklar, schätze.\n- portions: Anzahl Personen als Zahl. Wenn unklar, 4.\n- ings: q = Menge (nur Zahl oder Bereich wie "1-2", ohne Einheit), u = Einheit (g, dl, EL, TL, Stück, Bund, Prise, Dose …; leer lassen wenn keine), n = Zutat inkl. Zusatz wie "fein gehackt".\n- Zutaten ohne Menge: q und u leer lassen, z.B. {"q":"","u":"","n":"Salz, Pfeffer"}.\n- steps: Fliesstext, Schritte nummeriert als "1. …" durch Leerzeile getrennt. Nährwerte und Tipps am Schluss anfügen, falls vorhanden.\n- Kein img-Feld ausgeben.\n\nWenn die Vorlage kein Rezept ist, antworte exakt: {"error":"kein Rezept erkannt"}';
 
 async function handleScanFile(input){
-  const file=input.files&&input.files[0];
+  const files=input.files&&Array.from(input.files);
   input.value='';
-  if(!file) return;
+  if(!files||!files.length) return;
   if(!aiReady()){ toast('Kein API-Key hinterlegt'); return; }
-  if(file.size>10*1024*1024){ toast('Datei zu gross (max. 10 MB)'); return; }
+
   const hint=document.getElementById('aiScanHint');
   const setHint=(t,state)=>{
     if(!hint) return;
@@ -1762,29 +1768,41 @@ async function handleScanFile(input){
     hint.classList.remove('busy','err');
     if(state) hint.classList.add(state);
   };
+
   setHint('Wird gelesen…','busy');
   pendingImg=null;
+
   try{
-    const b64=await fileToBase64(file);
-    const isPdf = file.type==='application/pdf' || /\.pdf$/i.test(file.name);
-    if(!isPdf) pendingImg='data:'+(file.type||'image/jpeg')+';base64,'+b64;   // Foto für Upload merken
-    const block = isPdf
-      ? {type:'document', source:{type:'base64', media_type:'application/pdf', data:b64}}
-      : {type:'image', source:{type:'base64', media_type:(file.type||'image/jpeg'), data:b64}};
-    setHint('⏳ KI liest das Rezept … dauert 10–30 Sek., bitte warten','busy');
+    // Alle Dateien verarbeiten
+    const blocks=[];
+    for(const file of files){
+      if(file.size>10*1024*1024){ toast('Datei zu gross: '+file.name); continue; }
+      const b64=await fileToBase64(file);
+      const isPdf = file.type==='application/pdf' || /\.pdf$/i.test(file.name);
+      if(!isPdf && !pendingImg) pendingImg='data:'+(file.type||'image/jpeg')+';base64,'+b64;
+      const block = isPdf
+        ? {type:'document', source:{type:'base64', media_type:'application/pdf', data:b64}}
+        : {type:'image', source:{type:'base64', media_type:(file.type||'image/jpeg'), data:b64}};
+      blocks.push(block);
+    }
+    blocks.push({type:'text', text:AI_PROMPT});
+
+    setHint('⏳ KI liest '+files.length+' Datei(en) … dauert '+Math.min(30, files.length*10)+'–60 Sek., bitte warten','busy');
     const t0=Date.now();
     const tick=setInterval(()=>{
       const s=Math.round((Date.now()-t0)/1000);
-      setHint('⏳ KI liest das Rezept … '+s+' Sek. – bitte warten','busy');
+      setHint('⏳ KI liest '+files.length+' Datei(en) … '+s+' Sek. – bitte warten','busy');
     },1000);
+
     let res;
     try{
       res=await fetch('https://api.anthropic.com/v1/messages',{
         method:'POST',
         headers:{'Content-Type':'application/json','x-api-key':aiKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:aiModel(),max_tokens:2000,messages:[{role:'user',content:[block,{type:'text',text:AI_PROMPT}]}]})
+        body:JSON.stringify({model:aiModel(),max_tokens:3000,messages:[{role:'user',content:blocks}]})
       });
     } finally { clearInterval(tick); }
+
     if(!res.ok){ const t=await res.text(); throw new Error('API '+res.status+' '+t.slice(0,140)); }
     const data=await res.json();
     const txt=(data.content||[]).filter(c=>c.type==='text').map(c=>c.text).join('').trim();
@@ -1792,7 +1810,7 @@ async function handleScanFile(input){
     let obj; try{ obj=JSON.parse(clean); }catch(e){ throw new Error('Antwort nicht lesbar'); }
     if(obj.error){ setHint('',null); toast('Kein Rezept erkannt'); return; }
     fillFormFromAi(obj);
-    setHint(pendingImg && ghReady() ? '✓ Erkannt – Foto wird beim Speichern als Rezeptbild hochgeladen.' : '✓ Erkannt – bitte prüfen und speichern.', null);
+    setHint(pendingImg && ghReady() ? '✓ '+files.length+' Datei(en) erkannt – Foto wird beim Speichern hochgeladen.' : '✓ '+files.length+' Datei(en) erkannt – bitte prüfen und speichern.', null);
     toast('Rezept erkannt – bitte prüfen');
   }catch(e){
     pendingImg=null;
@@ -2108,7 +2126,7 @@ if(ghReady()) pullFromGitHub(false);
 else if(DB.src) syncFromSource(false);
 
 /* Service Worker für Installierbarkeit + Offline + Auto-Update + DEBUG */
-console.log('🍳 Rezeptbuch v9.11 - Backend Proxy Support - DEBUG MODE AKTIV');
+console.log('🍳 Rezeptbuch v9.12 - Backend Proxy Support - DEBUG MODE AKTIV');
 console.log('Browser supports Service Worker:', 'serviceWorker' in navigator);
 console.log('Current location:', window.location.href);
 
