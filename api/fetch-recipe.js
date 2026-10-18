@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     }
 
     const html = await response.text();
-    const limitedHtml = html.substring(0, 50000); // Goldene Mitte: 50000 Zeichen - genug für komplexe Seiten, schnell genug für Vercel
+    const limitedHtml = html.substring(0, 50000); // Performance-optimiert: 50000 Zeichen - schneller für Vercel Timeout
 
     // Debug-Logging
     console.log('[RECIPE-FETCH] Original HTML-Größe:', html.length, 'chars');
