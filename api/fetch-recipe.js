@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     }
 
     const html = await response.text();
-    const limitedHtml = html.substring(0, 50000); // Erhöht auf 50000 - manche Seiten haben Zutaten erst weiter unten!
+    const limitedHtml = html.substring(0, 100000); // Erhöht auf 100000 - für längere Seiten wie Gault Millau /rezepte/ URLs
 
     // Debug-Logging
     console.log('[RECIPE-FETCH] Original HTML-Größe:', html.length, 'chars');
