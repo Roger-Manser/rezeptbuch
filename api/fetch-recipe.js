@@ -57,7 +57,7 @@ export default async function handler(req, res) {
     }
 
     const html = await response.text();
-    const limitedHtml = html.substring(0, 60000); // Performance: 60000 Zeichen - schnell genug für Vercel 15s Timeout
+    const limitedHtml = html.substring(0, 70000); // Balanced: 70000 Zeichen - schnell UND vollständig
 
     // Debug-Logging
     console.log('[RECIPE-FETCH] Original HTML-Größe:', html.length, 'chars');
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 2000,
+        max_tokens: 2500,
         messages: [{
           role: 'user',
           content: `Du bist ein Rezept-Parsing-Experte. Extrahiere EXAKT aus diesem HTML.
