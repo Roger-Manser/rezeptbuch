@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=9.4">
+<link rel="manifest" href="manifest.json?v=9.6">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -248,7 +248,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.4</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.6</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -438,30 +438,30 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
     <div style="display:flex;gap:8px;margin-bottom:16px">
       <button class="btn ghost" onclick="openUrlImport()" style="flex:1">📎 Von URL importieren</button>
     </div>
-    <input id="rcName" name="rc-name" placeholder="z.B. Cordon bleu" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false">
+    <input id="rcName" name="rc-name" placeholder="z.B. Cordon bleu" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()">
     <div class="row2">
       <div><label>Kategorie</label>
-        <select id="rcCat"><option>Schnell</option><option>Wochenende</option><option>Beilage</option><option>Dessert</option></select>
+        <select id="rcCat" onclick="event.stopPropagation()"><option>Schnell</option><option>Wochenende</option><option>Beilage</option><option>Dessert</option></select>
       </div>
-      <div><label>Portionen</label><input id="rcPortions" type="number" inputmode="numeric" placeholder="4"></div>
+      <div><label>Portionen</label><input id="rcPortions" type="number" inputmode="numeric" placeholder="4" onclick="event.stopPropagation()"></div>
     </div>
     <label>Zubereitungszeit (Minuten, optional)</label>
-    <input id="rcTime" type="number" inputmode="numeric" placeholder="z.B. 30">
+    <input id="rcTime" type="number" inputmode="numeric" placeholder="z.B. 30" onclick="event.stopPropagation()">
     <label>Bild (Pfad oder URL, optional)</label>
     <div class="imgUploadBox">
-      <input id="rcImg" name="rc-img" placeholder="z.B. bilder/rezept.webp" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="url">
+      <input id="rcImg" name="rc-img" placeholder="z.B. bilder/rezept.webp" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="url" onclick="event.stopPropagation()">
       <button type="button" class="btn ghost" onclick="pickImageUpload()" id="uploadImgBtn">📤 Upload</button>
     </div>
     <input type="file" id="recImgFile" accept="image/*" hidden onchange="handleImageUpload(this)">
     <img id="rcImgPreview" class="imgPreview" alt="" hidden>
     <div class="hint" id="imgUploadHint" style="margin-top:6px"></div>
     <label>Herkunft / Quelle (optional)</label>
-    <input id="rcSrc" name="rc-src" placeholder="z.B. Betty Bossi" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false">
+    <input id="rcSrc" name="rc-src" placeholder="z.B. Betty Bossi" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()">
     <label>Zutaten (Menge · Einheit · Zutat)</label>
     <div id="ingRows"></div>
     <button class="btn ghost" style="margin-top:4px" onclick="addIngRow('','','','new')">+ Zutat</button>
     <label>Zubereitung</label>
-    <textarea id="rcSteps" placeholder="Schritte, Tipps, Garzeiten… (jeder Schritt auf neuer Zeile oder mit 1. 2. 3.)" autocomplete="off" autocapitalize="sentences"></textarea>
+    <textarea id="rcSteps" placeholder="Schritte, Tipps, Garzeiten… (jeder Schritt auf neuer Zeile oder mit 1. 2. 3.)" autocomplete="off" autocapitalize="sentences" onclick="event.stopPropagation()"></textarea>
     <button class="btn primary" id="rcSaveBtn" onclick="saveRecipe()">Rezept speichern</button>
     <button class="btn danger" id="rcDeleteBtn" onclick="deleteRecipe()" hidden>Rezept löschen</button>
     <button class="btn ghost" onclick="closeRecipe()">Abbrechen</button>
@@ -480,11 +480,19 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '9.4';
+const VERSION = '9.6';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'9.6', d:'2026-10-18', items:[
+    '🔧 Editiermodus bleibt offen, wenn Mengen/Felder angepasst werden',
+    '✅ event.stopPropagation() auf allen input/select/textarea Feldern hinzugefügt'
+  ]},
+  {v:'9.5', d:'2026-10-18', items:[
+    '⚡ HTML-Limit reduziert: 70000 → 50000 Zeichen (Vercel Timeout beheben)',
+    '🚀 Schneller, weniger Timeout-Risiko'
+  ]},
   {v:'9.4', d:'2026-10-18', items:[
     '🔧 Node.js fetch() timeout-Option entfernt (Vercel Fehler)',
     '✅ CORS-Headers sollten jetzt korrekt gesendet werden',
@@ -2073,7 +2081,7 @@ if(ghReady()) pullFromGitHub(false);
 else if(DB.src) syncFromSource(false);
 
 /* Service Worker für Installierbarkeit + Offline + Auto-Update + DEBUG */
-console.log('🍳 Rezeptbuch v9.4 - Backend Proxy Support - DEBUG MODE AKTIV');
+console.log('🍳 Rezeptbuch v9.6 - Backend Proxy Support - DEBUG MODE AKTIV');
 console.log('Browser supports Service Worker:', 'serviceWorker' in navigator);
 console.log('Current location:', window.location.href);
 
