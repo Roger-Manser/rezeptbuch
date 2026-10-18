@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=8.8">
+<link rel="manifest" href="manifest.json?v=8.9">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -248,7 +248,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v8.8</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v8.9</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -480,11 +480,16 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '8.8';
+const VERSION = '8.9';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'8.9', d:'2026-10-18', items:[
+    '🔧 Bruch-Parsing verbessert (½, ¼, ¾ und 1/2, 1/4, 1/4)',
+    '🐛 fmtNum Präzision erhöht – Brüche ohne Ganzzahl werden korrekt angezeigt',
+    '🔍 Debug-Log für Mengen-Fehlersuche hinzugefügt'
+  ]},
   {v:'8.8', d:'2026-10-18', items:[
     '🎨 Änderungs-Tracking für Zutaten: Neu = Grün, Gelöscht = Gelb',
     '✨ Gelöschte Zutaten sind reversibel – können mit ✓ bestätigt oder rückgängig gemacht werden',
@@ -900,23 +905,49 @@ const FRAC={'½':0.5,'¼':0.25,'¾':0.75,'⅓':1/3,'⅔':2/3,'⅛':0.125};
 function parseNum(q){
   if(q==null||q==='') return null;
   let s=String(q).trim().replace(',','.');
-  // gemischte Brüche wie "1 ½"
+
+  // Normalisiere häufige Fehler: "1 1/2" → "1 + 1/2"
+  // Wenn es wie "1 1/2" oder "1½" aussieht (Ganzzahl + Bruch), verarbeite es korrekt
+
   let total=0, matched=false;
   const parts=s.split(/\s+/);
+
   for(const p of parts){
-    if(FRAC[p]!=null){ total+=FRAC[p]; matched=true; }
-    else if(/^\d+(\.\d+)?$/.test(p)){ total+=parseFloat(p); matched=true; }
-    else if(/^\d+\/\d+$/.test(p)){ const[a,b]=p.split('/'); total+=parseFloat(a)/parseFloat(b); matched=true; }
-    else { return {num:null,raw:q}; } // enthält Text -> nicht skalierbar
+    if(FRAC[p]!=null){
+      total+=FRAC[p];
+      matched=true;
+    }
+    else if(/^\d+(\.\d+)?$/.test(p)){
+      total+=parseFloat(p);
+      matched=true;
+    }
+    else if(/^\d+\/\d+$/.test(p)){
+      const[a,b]=p.split('/');
+      total+=parseFloat(a)/parseFloat(b);
+      matched=true;
+    }
+    else if(/^(\d+)\s*(\/|\\)\s*(\d+)$/.test(p)){
+      // Handles "1/2" oder "1/2" auch wenn Space drin ist
+      const match=p.match(/^(\d+)\s*(\/|\\)\s*(\d+)$/);
+      if(match){ total+=parseFloat(match[1])/parseFloat(match[3]); matched=true; }
+    }
+    else {
+      return {num:null,raw:q};
+    }
   }
   return matched? {num:total,raw:q} : {num:null,raw:q};
 }
 function fmtNum(v){
   if(v===Math.round(v)) return String(Math.round(v));
   // schöne Brüche
-  const map=[[0.5,'½'],[0.25,'¼'],[0.75,'¾'],[1/3,'⅓'],[2/3,'⅔']];
+  const map=[[0.5,'½'],[0.25,'¼'],[0.75,'¾'],[0.125,'⅛'],[1/3,'⅓'],[2/3,'⅔']];
   const whole=Math.floor(v), frac=v-whole;
-  for(const[f,s] of map){ if(Math.abs(frac-f)<0.04) return (whole?whole+' ':'')+s; }
+  for(const[f,s] of map){
+    if(Math.abs(frac-f)<0.01) {
+      // Wenn Ganzzahl=0, zeige nur Bruch. Sonst "N Bruch"
+      return whole>0 ? whole+' '+s : s;
+    }
+  }
   return (Math.round(v*100)/100).toLocaleString('de-CH');
 }
 // Einheiten-Normalisierung für Skalierung (intern rechnen, sinnvoll anzeigen)
@@ -928,6 +959,10 @@ function scaleIng(g, factor){
   const u=(g.u||'').trim();
   if(!p || p.num==null){ return {q:g.q, u:g.u}; } // leer oder Text wie "wenig" unverändert
   let val=p.num*factor;
+  // DEBUG: Log wenn "Zitronensaft" dabei ist
+  if((g.n||'').toLowerCase().includes('zitrone')){
+    console.log('DEBUG ZITRONENSAFT:', {raw:g.q, parsed:p.num, factor:factor, val:val, formatted:fmtNum(val)});
+  }
   let unit=u;
   const ul=u.toLowerCase();
   // Umrechnen für schönere Anzeige
