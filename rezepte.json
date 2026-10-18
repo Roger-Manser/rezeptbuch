@@ -11549,6 +11549,72 @@
       "steps": "Quitten mit Apfel- und Zitronensaft aufkochen, Hitze reduzieren, zugedeckt ca. 20 Min. weich köcheln. Quitten mit der Flüssigkeit pürieren, durch ein Sieb streichen.\nEigelb, Zucker und Zimt rühren, bis die Masse heller ist. Die noch warme Quittenmasse darunter rühren, auskühlen.\nEiweiss steif schlagen, mit dem Rahm sorgfältig unter die Masse ziehen. Die Mousse zugedeckt ca. 2 Std. kühl stellen.\nRahm in einer Pfanne warm werden lassen, Schokolade beigeben, unter Rühren schmelzen.",
       "img": "bilder/quittenmousse-auf-schokoladespiegel.webp",
       "src": "bettybossi.ch"
+    },
+    {
+      "name": "Boeuf Stroganoff by Andreas Caminada",
+      "cat": "Schnell",
+      "portions": 4,
+      "time": 30,
+      "ings": [
+        {
+          "q": "600",
+          "u": "g",
+          "n": "Schweizer Rindsfilet, in Streifen geschnitten"
+        },
+        {
+          "q": "2",
+          "u": "EL",
+          "n": "Bratbutter"
+        },
+        {
+          "q": "2",
+          "u": "Stück",
+          "n": "Zwiebeln, fein gehackt"
+        },
+        {
+          "q": "200",
+          "u": "g",
+          "n": "Champignons, in Scheiben"
+        },
+        {
+          "q": "1",
+          "u": "EL",
+          "n": "Tomatenpüree"
+        },
+        {
+          "q": "1",
+          "u": "dl",
+          "n": "Weisswein"
+        },
+        {
+          "q": "2",
+          "u": "dl",
+          "n": "Rindsbouillon"
+        },
+        {
+          "q": "2",
+          "u": "dl",
+          "n": "Rahm"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "Dijonsenf"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salz und Pfeffer nach Geschmack"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Petersilie, frisch gehackt"
+        }
+      ],
+      "steps": "Rindsfilet in Streifen schneiden, salzen und pfeffern.\nBratbutter in einer heissen Pfanne erhitzen und das Fleisch portionenweise scharf anbraten, dann beiseitelegen.\nZwiebeln und Champignons in derselben Pfanne andünsten.\nTomatenpüree beigeben und kurz mitrösten.\nMit Weisswein ablöschen und mit Rindsbouillon aufgiessen, kurz einkochen lassen.\nRahm und Dijonsenf beigeben und die Sauce cremig einkochen.\nFleisch wieder in die Sauce geben und kurz erwärmen.\nMit Salz und Pfeffer abschmecken und mit frischer Petersilie garniert servieren.",
+      "img": "",
+      "src": "gaultmillau.ch"
     }
   ]
 }
