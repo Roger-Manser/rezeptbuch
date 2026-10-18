@@ -11488,6 +11488,67 @@
       "steps": "1. Teig: Mehl und alle Zutaten (Eier, Milch, Wasser, Salz) in einer Schüssel geben, mischen und zugedeckt ca. 30 Min. quellen lassen.\n\n2. Füllung: Zwiebel mit Petersilie, Schnittlauch, Pfefferminze, Salsiz-Würfeli und Speckwürfeli mischen, dann unter den Teig mischen.\n\n3. Mangoldblätter: Blätter portionenweise je ca. 1 Min. in siedendem Salzwasser blanchieren, herausnehmen, kurz in kaltes Wasser legen, abtropfen lassen, auf einem Tuch auslegen und trocken tupfen. Je 1–2 Esslöffel Füllung auf ein Blatt geben, seitliche Blattränder einschlagen, aufrollen und in eine gefettete ofenfeste Form (ca. 2,5 Liter) legen.\n\n4. Capuns: Milch und Bouillon aufkochen. Heiss über die Capuns giessen. Käse darüberstreuen. Ca. 25 Min. in der Mitte des auf 200 °C vorgeheizten Ofens backen.\n\n5. Speckkrümel: Speckwürfeli und Bündnerfleisch in einer Bratpfanne ohne Fett knusprig braten und über die fertigen Capuns streuen.\n\nNährwerte pro Person: Fett 45 g, Kohlenhydrate 61 g, Eiweiss 50 g, ca. 860 kcal.",
       "img": "bilder/capuns.webp",
       "src": "fooby.ch/de/rezepte/13978/"
+    },
+    {
+      "name": "Quittenmousse auf Schokoladespiegel",
+      "cat": "Schnell",
+      "portions": 6,
+      "time": 40,
+      "ings": [
+        {
+          "q": "300",
+          "u": "g",
+          "n": "Quitten, geschält, in Schnitzen, Kerngehäuse entfernt"
+        },
+        {
+          "q": "3",
+          "u": "EL",
+          "n": "Apfelsaft"
+        },
+        {
+          "q": "0.5",
+          "u": "EL",
+          "n": "Zitronensaft"
+        },
+        {
+          "q": "1",
+          "u": "",
+          "n": "frisches Eigelb"
+        },
+        {
+          "q": "1.5",
+          "u": "EL",
+          "n": "Zucker"
+        },
+        {
+          "q": "",
+          "u": "wenig",
+          "n": "Zimt"
+        },
+        {
+          "q": "1",
+          "u": "",
+          "n": "frisches Eiweiss"
+        },
+        {
+          "q": "1",
+          "u": "dl",
+          "n": "Rahm, steif geschlagen"
+        },
+        {
+          "q": "4",
+          "u": "EL",
+          "n": "Rahm"
+        },
+        {
+          "q": "100",
+          "u": "g",
+          "n": "dunkle Schokolade (z.B. Crémant), in Stücken"
+        }
+      ],
+      "steps": "Quitten mit Apfel- und Zitronensaft aufkochen, Hitze reduzieren, zugedeckt ca. 20 Min. weich köcheln. Quitten mit der Flüssigkeit pürieren, durch ein Sieb streichen.\nEigelb, Zucker und Zimt rühren, bis die Masse heller ist. Die noch warme Quittenmasse darunter rühren, auskühlen.\nEiweiss steif schlagen, mit dem Rahm sorgfältig unter die Masse ziehen. Die Mousse zugedeckt ca. 2 Std. kühl stellen.\nRahm in einer Pfanne warm werden lassen, Schokolade beigeben, unter Rühren schmelzen.",
+      "img": "bilder/quittenmousse-auf-schokoladespiegel.webp",
+      "src": "bettybossi.ch"
     }
   ]
 }
