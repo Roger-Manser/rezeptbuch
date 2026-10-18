@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     }
 
     const html = await response.text();
-    const limitedHtml = html.substring(0, 100000); // Erhöht auf 100000 - für längere Seiten wie Gault Millau /rezepte/ URLs
+    const limitedHtml = html.substring(0, 70000); // Goldene Mitte: 70000 Zeichen - genug für komplexe Seiten, schnell genug für Vercel
 
     // Debug-Logging
     console.log('[RECIPE-FETCH] Original HTML-Größe:', html.length, 'chars');
