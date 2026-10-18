@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
     // 1. Fetch die Website mit Timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 Sekunden Timeout
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 Sekunden Timeout (Vercel 15s safety margin)
 
     let response;
     try {
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
     }
 
     const html = await response.text();
-    const limitedHtml = html.substring(0, 80000); // Optimiert: 80000 Zeichen - gross genug für komplexe Seiten mit viel SEO/Navigation
+    const limitedHtml = html.substring(0, 60000); // Performance: 60000 Zeichen - schnell genug für Vercel 15s Timeout
 
     // Debug-Logging
     console.log('[RECIPE-FETCH] Original HTML-Größe:', html.length, 'chars');
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 3000,
+        max_tokens: 2000,
         messages: [{
           role: 'user',
           content: `Du bist ein Rezept-Parsing-Experte. Extrahiere EXAKT aus diesem HTML.
