@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=8.7">
+<link rel="manifest" href="manifest.json?v=8.8">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -127,9 +127,14 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-
 .rating{display:flex;gap:3px;flex-wrap:wrap;margin-top:8px}
 .rating button{flex:1;min-width:26px;height:34px;border:1px solid var(--line);background:#fff;border-radius:7px;font-size:13px;font-weight:700;color:var(--ink-soft);cursor:pointer}
 .rating button.on{background:var(--amber);color:#fff;border-color:var(--amber)}
-.ingrow{display:flex;gap:6px;margin-bottom:6px;align-items:center}
+.ingrow{display:flex;gap:6px;margin-bottom:6px;align-items:center;padding:6px;border-radius:8px;transition:background-color 0.2s}
 .ingrow input.q{flex:0 0 64px}.ingrow input.u{flex:0 0 64px}.ingrow input.n{flex:1;min-width:0}
 .ingrow .rm{flex:0 0 38px;height:44px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#B3261E;font-size:18px;cursor:pointer}
+.ingrow.status-new{background-color:#D4EDDA;border-left:3px solid #28A745}
+.ingrow.status-deleted{background-color:#FFF3CD;border-left:3px solid #FFC107;opacity:0.7}
+.ingrow .confirm-status{flex:0 0 34px;height:34px;border:none;border-radius:6px;background:#fff;color:#666;font-size:12px;cursor:pointer;padding:0;display:none}
+.ingrow.status-new .confirm-status,.ingrow.status-deleted .confirm-status{display:block}
+.ingrow.status-deleted input{opacity:0.6;cursor:not-allowed}
 .shoprow{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line)}
 .shoprow:last-child{border-bottom:none}
 .shoprow input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none}
@@ -243,7 +248,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v8.7</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v8.8</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -454,7 +459,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
     <input id="rcSrc" name="rc-src" placeholder="z.B. Betty Bossi" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false">
     <label>Zutaten (Menge · Einheit · Zutat)</label>
     <div id="ingRows"></div>
-    <button class="btn ghost" style="margin-top:4px" onclick="addIngRow()">+ Zutat</button>
+    <button class="btn ghost" style="margin-top:4px" onclick="addIngRow('','','','new')">+ Zutat</button>
     <label>Zubereitung</label>
     <textarea id="rcSteps" placeholder="Schritte, Tipps, Garzeiten… (jeder Schritt auf neuer Zeile oder mit 1. 2. 3.)" autocomplete="off" autocapitalize="sentences"></textarea>
     <button class="btn primary" id="rcSaveBtn" onclick="saveRecipe()">Rezept speichern</button>
@@ -475,11 +480,16 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '8.7';
+const VERSION = '8.8';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'8.8', d:'2026-10-18', items:[
+    '🎨 Änderungs-Tracking für Zutaten: Neu = Grün, Gelöscht = Gelb',
+    '✨ Gelöschte Zutaten sind reversibel – können mit ✓ bestätigt oder rückgängig gemacht werden',
+    '📝 Markierungen bleiben bestehen bis einzeln bestätigt'
+  ]},
   {v:'8.7', d:'2026-10-10', items:[
     '🐛 Portionen-Parse-Fehler gefixt: extrahiert nur die Zahl aus "4 Portionen"',
     '✅ Input type="number" akzeptiert jetzt korrekt die extrahierte Zahl'
@@ -1155,10 +1165,31 @@ function clearDone(){ const n=DB.shopping.filter(s=>s.done).length; if(!n){toast
   DB.shopping=DB.shopping.filter(s=>!s.done); persist(); renderAll(); toast(n+' Posten entfernt'); }
 
 /* ---------- Erfassen/Bearbeiten ---------- */
-function addIngRow(q,u,n){
+function addIngRow(q,u,n,status){
   const div=document.createElement('div'); div.className='ingrow';
-  div.innerHTML='<input class="q" placeholder="500" value="'+esc(q||'')+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" onclick="event.stopPropagation()"><input class="u" placeholder="g" value="'+esc(u||'')+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onclick="event.stopPropagation()"><input class="n" placeholder="Zutat" value="'+esc(n||'')+'" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()"><button class="rm" onclick="event.stopPropagation();this.parentNode.remove()">×</button>';
+  if(status) div.classList.add('status-'+status);
+  div.innerHTML='<input class="q" placeholder="500" value="'+esc(q||'')+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" onclick="event.stopPropagation()" '+(status==='deleted'?'disabled':'')+' ><input class="u" placeholder="g" value="'+esc(u||'')+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onclick="event.stopPropagation()" '+(status==='deleted'?'disabled':'')+' ><input class="n" placeholder="Zutat" value="'+esc(n||'')+'" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()" '+(status==='deleted'?'disabled':'')+' ><button class="rm" onclick="event.stopPropagation();markIngRowDeleted(this.parentNode)">×</button><button class="confirm-status" onclick="event.stopPropagation();confirmIngRowStatus(this.parentNode)">✓</button>';
   document.getElementById('ingRows').appendChild(div);
+}
+function markIngRowDeleted(row){
+  if(row.classList.contains('status-deleted')){
+    // Wenn bereits gelöscht, rückgängig machen
+    row.classList.remove('status-deleted');
+    row.querySelectorAll('input').forEach(i=>i.disabled=false);
+  }else{
+    // Als gelöscht markieren
+    row.classList.add('status-deleted');
+    row.querySelectorAll('input').forEach(i=>i.disabled=true);
+  }
+}
+function confirmIngRowStatus(row){
+  if(row.classList.contains('status-deleted')){
+    if(confirm('Zutat wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.')){
+      row.remove();
+    }
+  }else if(row.classList.contains('status-new')){
+    row.classList.remove('status-new');
+  }
 }
 function openRecipeSheet(id){
   editRecipeId=id||null;
@@ -1243,8 +1274,8 @@ async function importRecipeFromUrl(){
             if(recipe.ingredients && Array.isArray(recipe.ingredients)){
               recipe.ingredients.forEach(ing=>{
                 const div=document.createElement('div');
-                div.className='ingrow';
-                div.innerHTML=`<input class="q" placeholder="500" value="${ing.quantity||''}" autocomplete="off" spellcheck="false" onclick="event.stopPropagation()"><input class="u" placeholder="g" value="${ing.unit||''}" autocomplete="off" spellcheck="false" onclick="event.stopPropagation()"><input class="n" placeholder="Zutat" value="${ing.name||''}" autocomplete="off" onclick="event.stopPropagation()"><button class="rm" onclick="event.stopPropagation();this.parentNode.remove()">×</button>`;
+                div.className='ingrow status-new';
+                div.innerHTML=`<input class="q" placeholder="500" value="${ing.quantity||''}" autocomplete="off" spellcheck="false" onclick="event.stopPropagation()"><input class="u" placeholder="g" value="${ing.unit||''}" autocomplete="off" spellcheck="false" onclick="event.stopPropagation()"><input class="n" placeholder="Zutat" value="${ing.name||''}" autocomplete="off" onclick="event.stopPropagation()"><button class="rm" onclick="event.stopPropagation();markIngRowDeleted(this.parentNode)">×</button><button class="confirm-status" onclick="event.stopPropagation();confirmIngRowStatus(this.parentNode)">✓</button>`;
                 ingRows.appendChild(div);
               });
             }
@@ -1377,8 +1408,8 @@ ${html.substring(0,8000)}`
     if(recipe.ingredients && Array.isArray(recipe.ingredients)){
       recipe.ingredients.forEach(ing=>{
         const div=document.createElement('div');
-        div.className='ingrow';
-        div.innerHTML=`<input class="q" placeholder="500" value="${ing.quantity||''}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"><input class="u" placeholder="g" value="${ing.unit||''}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><input class="n" placeholder="Zutat" value="${ing.name||''}" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false"><button class="rm" onclick="this.parentNode.remove()">×</button>`;
+        div.className='ingrow status-new';
+        div.innerHTML=`<input class="q" placeholder="500" value="${ing.quantity||''}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"><input class="u" placeholder="g" value="${ing.unit||''}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"><input class="n" placeholder="Zutat" value="${ing.name||''}" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false"><button class="rm" onclick="event.stopPropagation();markIngRowDeleted(this.parentNode)">×</button><button class="confirm-status" onclick="event.stopPropagation();confirmIngRowStatus(this.parentNode)">✓</button>`;
         ingRows.appendChild(div);
       });
     }
