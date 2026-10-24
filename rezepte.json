@@ -11650,6 +11650,47 @@
       "steps": "1. Das Fleisch mit Salz, Pfeffer, Gulaschgewürz würzen und in einer Pfanne kurz anbraten.\n2. Aus der Pfanne nehmen, etwas Butter in dieselbe Pfanne geben und die Champignons und Schalotten darin anbraten.\n3. Peronistreifen und Schinken Juliennes dazugeben, abschmecken.\n4. Paprikapulver und Tomatenmark dazugeben und anrösten.\n5. Mit Cognac ablöschen, Senf (und nach Belieben Sambal Oeleck) dazugeben und das Ganze einreduzieren lassen.\n6. Mit Bouillon und Jus aufgiessen und mit etwas Butter binden.\n7. Den Rahm einrühren und alles bis zur gewünschten Konsistenz einkochen.\n8. Zum Schluss das angebratene Fleisch in der Sauce erwärmen, so, dass es medium serviert werden kann.\n9. Beim Anrichten noch etwas Crème fraîche auf das Stroganoff geben und mit den Juliennes der Essigurke und etwas Schnittlauch garnieren. Dazu Nüdeli servieren.",
       "img": "bilder/filet-stroganoff-by-andreas-caminada.webp",
       "src": "gaultmillau.ch"
+    },
+    {
+      "name": "Bohnen mit Speck",
+      "cat": "Wochenende",
+      "portions": 4,
+      "time": 80,
+      "ings": [
+        {
+          "q": "600",
+          "u": "g",
+          "n": "Kochspeck"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salz"
+        },
+        {
+          "q": "800",
+          "u": "g",
+          "n": "kleinere festkochende Kartoffeln"
+        },
+        {
+          "q": "500",
+          "u": "g",
+          "n": "Bohnen"
+        },
+        {
+          "q": "25",
+          "u": "g",
+          "n": "Butter"
+        },
+        {
+          "q": "2",
+          "u": "Zweige",
+          "n": "Petersilie, nach Belieben"
+        }
+      ],
+      "steps": "1. Speck 40 Minuten in reichlich leicht gesalzenem Wasser kochen. Schaum abschöpfen.\n\n2. Kartoffeln schälen, grössere halbieren, 10 Minuten mitkochen.\n\n3. Bohnen fädeln, dazugeben und weitere 10 Minuten mitkochen.\n\n4. Butter bei mittlerer Hitze erwärmen, bis sie hellbraun ist und leicht nussig schmeckt.\n\n5. Speck in Scheiben schneiden, mit Kartoffeln und Bohnen anrichten. Mit Butter beträufeln. Nach Belieben mit gehackter Petersilie bestreuen.\n\nTipp: Grüne Bohnen enthalten Phasin. Damit sie verzehrt werden können, müssen sie mindestens 10 Minuten gar gekocht werden.\n\nNährwerte pro Person: Eiweiss 34 g, Fett 52 g, Kohlenhydrate 38 g, 760 kcal",
+      "img": "",
+      "src": "https://migusto.migros.ch/de/rezepte/bohnen-mit-speck"
     }
   ]
 }
