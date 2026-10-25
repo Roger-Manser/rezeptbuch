@@ -11691,6 +11691,92 @@
       "steps": "1. Speck 40 Minuten in reichlich leicht gesalzenem Wasser kochen. Schaum abschöpfen.\n\n2. Kartoffeln schälen, grössere halbieren, 10 Minuten mitkochen.\n\n3. Bohnen fädeln, dazugeben und weitere 10 Minuten mitkochen.\n\n4. Butter bei mittlerer Hitze erwärmen, bis sie hellbraun ist und leicht nussig schmeckt.\n\n5. Speck in Scheiben schneiden, mit Kartoffeln und Bohnen anrichten. Mit Butter beträufeln. Nach Belieben mit gehackter Petersilie bestreuen.\n\nTipp: Grüne Bohnen enthalten Phasin. Damit sie verzehrt werden können, müssen sie mindestens 10 Minuten gar gekocht werden.\n\nNährwerte pro Person: Eiweiss 34 g, Fett 52 g, Kohlenhydrate 38 g, 760 kcal",
       "img": "bilder/bohnen-mit-speck.webp",
       "src": "https://migusto.migros.ch/de/rezepte/bohnen-mit-speck"
+    },
+    {
+      "name": "Kräuter-Caramelle mit Lachsfüllung",
+      "cat": "Wochenende",
+      "portions": 4,
+      "time": 570,
+      "ings": [
+        {
+          "q": "",
+          "u": "",
+          "n": "Pastamaschine"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Spritzsack mit glatter Tülle von ca. 13 mm Ø"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Gezacktes Teigrad"
+        },
+        {
+          "q": "300",
+          "u": "g",
+          "n": "Weizenmehl Typ 00 / Pizzamehl"
+        },
+        {
+          "q": "0.5",
+          "u": "TL",
+          "n": "Salz"
+        },
+        {
+          "q": "3",
+          "u": "Stück",
+          "n": "Eier"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "evtl. wenig Wasser"
+        },
+        {
+          "q": "20",
+          "u": "g",
+          "n": "Kräuter (z.B. Petersilie, Dill, Basilikum), grobe Stiele entfernt"
+        },
+        {
+          "q": "200",
+          "u": "g",
+          "n": "Mascarpone"
+        },
+        {
+          "q": "150",
+          "u": "g",
+          "n": "Räucherlachs, fein geschnitten"
+        },
+        {
+          "q": "3",
+          "u": "Zweige",
+          "n": "Dill, Blätter abgezupft, fein geschnitten"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Bio-Zitrone, abgeriebene Schale"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salz, Pfeffer"
+        },
+        {
+          "q": "50",
+          "u": "g",
+          "n": "Butter"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Bio-Zitrone"
+        }
+      ],
+      "steps": "1. Pastateig: Mehl und Salz mischen, eine Mulde formen. Eier hineingeben, mit einer Gabel verquirlen, das Mehl von innen nach aussen in die Eier rühren. Evtl. wenig Wasser beifügen. Teig von Hand so lange kneten, bis er homogen und geschmeidig ist und nicht mehr klebt. Teig zu einer Kugel formen, in Folie gewickelt im Kühlschrank 12 Stunden ruhen lassen. In vier Stücke teilen. Teigstücke portionenweise durch die Pastamaschine drehen, sodass Teigblätter von 0,5 mm Dicke entstehen. 2 Teigblätter mit Wasser bestreichen, Kräuter unregelmässig dicht darauf verteilen, restliche Teigblätter darüberlegen. Teig durch die Pastamaschine drehen, bis auf knapp 1 mm Dicke auswallen.\n\n2. Füllung: Alle Zutaten gut mischen, würzen, in den Spritzsack füllen, bis zur Weiterverarbeitung kühlstellen.\n\n3. Formen: Teig mit dem gezackten Teigrad in 8 cm breite Streifen schneiden. 10 cm lange Rechtecke zuschneiden. Teigstücke mit Wasser bestreichen, dabei die Mitte aussparen. Je zwei baumnussgrosse Häufchen Füllung daraufspritzen, längs einrollen, die Teigenden zusammendrücken, sodass bonbonförmige Teigtaschen entstehen.\n\n4. Fertigstellen: Caramelle portionenweise in leicht siedendem Salzwasser 3 bis 4 Minuten ziehen lassen. Mit einer Schaumkelle vorsichtig herausnehmen und abtropfen lassen. Butter in der Pfanne schmelzen, Caramelle beigeben, mischen. Auf Tellern anrichten, Zitronenschale darüberreiben.",
+      "img": "bilder/kraeuter-caramelle-mit-lachsfuellung.webp",
+      "src": "le menu / Tele"
     }
   ]
 }
