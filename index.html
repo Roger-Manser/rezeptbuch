@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=9.15">
+<link rel="manifest" href="manifest.json?v=9.16">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -127,13 +127,15 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-
 .rating{display:flex;gap:3px;flex-wrap:wrap;margin-top:8px}
 .rating button{flex:1;min-width:26px;height:34px;border:1px solid var(--line);background:#fff;border-radius:7px;font-size:13px;font-weight:700;color:var(--ink-soft);cursor:pointer}
 .rating button.on{background:var(--amber);color:#fff;border-color:var(--amber)}
-.ingrow{display:flex;gap:6px;margin-bottom:6px;align-items:center;padding:6px;border-radius:8px;transition:background-color 0.2s}
+.ingrow{display:flex;gap:6px;margin-bottom:6px;align-items:center;padding:6px;border-radius:8px;transition:background-color 0.2s;flex-wrap:wrap}
 .ingrow input.q{flex:0 0 64px}.ingrow input.u{flex:0 0 64px}.ingrow input.n{flex:1;min-width:0}
 .ingrow .rm{flex:0 0 38px;height:44px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#B3261E;font-size:18px;cursor:pointer}
 .ingrow.status-new{background-color:#D4EDDA;border-left:3px solid #28A745}
 .ingrow.status-deleted{background-color:#FFF3CD;border-left:3px solid #FFC107;opacity:0.7}
 .ingrow .confirm-status{flex:0 0 34px;height:34px;border:none;border-radius:6px;background:#fff;color:#666;font-size:12px;cursor:pointer;padding:0;display:none}
 .ingrow.status-changed{background-color:#CCE5FF;border-left:3px solid #0D6EFD}
+.ingrow .orig-ing{display:none;font-size:10px;color:#888;text-decoration:line-through;width:100%;padding:0 4px}
+.ingrow.status-changed .orig-ing{display:block}
 .ingrow.status-new .confirm-status,.ingrow.status-deleted .confirm-status,.ingrow.status-changed .confirm-status{display:block}
 .ingrow.status-deleted input{opacity:0.6;cursor:not-allowed}
 /* Change-Tracking für alle Felder */
@@ -141,13 +143,17 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-
 .field-wrap.changed input,.field-wrap.changed textarea,.field-wrap.changed select{background:#D4EDDA;border-color:#28A745}
 .field-wrap .undo-field{display:none;position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:#28A745;color:#fff;border-radius:6px;font-size:11px;padding:3px 8px;cursor:pointer;z-index:2;white-space:nowrap}
 .field-wrap.changed .undo-field{display:block}
+.field-wrap .orig-val{display:none;font-size:11px;color:#888;text-decoration:line-through;padding:2px 4px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.field-wrap.changed .orig-val{display:block}
 /* Schritte: einzelne Zeilen trackbar */
-.step-row{display:flex;gap:6px;margin-bottom:4px;align-items:flex-start;padding:4px 6px;border-radius:8px;transition:background-color 0.2s}
+.step-row{display:flex;gap:6px;margin-bottom:4px;align-items:flex-start;padding:4px 6px;border-radius:8px;transition:background-color 0.2s;flex-wrap:wrap}
 .step-row textarea{flex:1;min-height:40px;resize:vertical;font-size:14px}
 .step-row .rm{flex:0 0 34px;height:34px;border:1px solid var(--line);border-radius:6px;background:#fff;color:#B3261E;font-size:16px;cursor:pointer}
 .step-row.step-new{background-color:#D4EDDA;border-left:3px solid #28A745}
 .step-row.step-deleted{background-color:#FFF3CD;border-left:3px solid #FFC107;opacity:0.7}
 .step-row.step-changed{background-color:#CCE5FF;border-left:3px solid #0D6EFD}
+.step-row .orig-step{display:none;font-size:10px;color:#888;text-decoration:line-through;width:100%;padding:0 4px;word-break:break-word}
+.step-row.step-changed .orig-step{display:block}
 .step-row .step-undo{display:none;flex:0 0 34px;height:34px;border:none;border-radius:6px;background:#fff;color:#666;font-size:12px;cursor:pointer;padding:0}
 .step-row.step-new .step-undo,.step-row.step-deleted .step-undo,.step-row.step-changed .step-undo{display:block}
 .shoprow{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line)}
@@ -263,7 +269,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.15</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.16</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -496,16 +502,17 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '9.15';
+const VERSION = '9.16';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
-  {v:'9.15', d:'2026-11-02', items:[
+  {v:'9.16', d:'2026-11-02', items:[
     '🎨 CHANGE-TRACKING: Alle Änderungen farblich markiert!',
-    '🟢 Grün = neu hinzugefügt, 🔵 Blau = geändert, 🟡 Gelb = gelöscht',
+    '🟢 Grün = neu, 🔵 Blau = geändert, 🟡 Gelb = gelöscht',
+    '👁️ Alter Wert wird durchgestrichen unter Änderungen angezeigt',
     '↩ Rückgängig-Button pro Feld, Zutat und Schritt',
-    '📝 Schritte jetzt einzeln bearbeitbar (statt einer Textarea)'
+    '📝 Schritte einzeln bearbeitbar mit Change-Tracking'
   ]},
   {v:'9.14', d:'2026-11-02', items:[
     '📸 BILD-UPLOAD ZUVERLÄSSIG: Kein 3-4x versuchen mehr!',
@@ -1312,6 +1319,10 @@ function trackIngRow(row){
   if(row.classList.contains('status-new')||row.classList.contains('status-deleted')) return;
   const [qi,ui,ni]=row.querySelectorAll('input');
   const changed=qi.value!==row.dataset.origQ || ui.value!==row.dataset.origU || ni.value!==row.dataset.origN;
+  // Originalwert-Anzeige
+  let origDiv=row.querySelector('.orig-ing');
+  if(!origDiv){ origDiv=document.createElement('div'); origDiv.className='orig-ing'; row.appendChild(origDiv); }
+  origDiv.textContent=[row.dataset.origQ,row.dataset.origU,row.dataset.origN].filter(Boolean).join(' ')||'(leer)';
   if(changed) row.classList.add('status-changed');
   else row.classList.remove('status-changed');
 }
@@ -1348,12 +1359,15 @@ let originalValues={};  // Originalwerte beim Öffnen eines bestehenden Rezepts
 const TRACKED_FIELDS=['rcName','rcCat','rcPortions','rcTime','rcSrc'];
 
 function trackField(fid){
-  if(!editRecipeId) return;  // Kein Tracking bei neuem Rezept
+  if(!editRecipeId) return;
   const el=document.getElementById(fid);
   const wrap=document.getElementById('wrap'+fid.replace('rc',''));
   if(!el||!wrap) return;
   const cur=el.value;
   const orig=originalValues[fid]||'';
+  let origSpan=wrap.querySelector('.orig-val');
+  if(!origSpan){ origSpan=document.createElement('div'); origSpan.className='orig-val'; wrap.appendChild(origSpan); }
+  origSpan.textContent='Vorher: '+(orig||'(leer)');
   if(cur!==orig){ wrap.classList.add('changed'); }
   else{ wrap.classList.remove('changed'); }
 }
@@ -1389,6 +1403,10 @@ function addStepRow(text,status){
   if(editRecipeId && !status){
     const origText=text||'';
     ta.dataset.original=origText;
+    const origDiv=document.createElement('div');
+    origDiv.className='orig-step';
+    origDiv.textContent=origText||'(leer)';
+    div.appendChild(origDiv);
     ta.addEventListener('input',function(){
       if(this.value!==this.dataset.original){
         div.classList.add('step-changed');
@@ -2339,7 +2357,7 @@ if(ghReady()) pullFromGitHub(false);
 else if(DB.src) syncFromSource(false);
 
 /* Service Worker für Installierbarkeit + Offline + Auto-Update + DEBUG */
-console.log('🍳 Rezeptbuch v9.15 - Backend Proxy Support - DEBUG MODE AKTIV');
+console.log('🍳 Rezeptbuch v9.16 - Backend Proxy Support - DEBUG MODE AKTIV');
 console.log('Browser supports Service Worker:', 'serviceWorker' in navigator);
 console.log('Current location:', window.location.href);
 
