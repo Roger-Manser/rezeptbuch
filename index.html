@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1F2A22">
-<link rel="manifest" href="manifest.json?v=9.14">
+<link rel="manifest" href="manifest.json?v=9.15">
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="apple-touch-icon" href="icons/favicon-48.png">
 <title>Rezeptbuch</title>
@@ -133,8 +133,23 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-
 .ingrow.status-new{background-color:#D4EDDA;border-left:3px solid #28A745}
 .ingrow.status-deleted{background-color:#FFF3CD;border-left:3px solid #FFC107;opacity:0.7}
 .ingrow .confirm-status{flex:0 0 34px;height:34px;border:none;border-radius:6px;background:#fff;color:#666;font-size:12px;cursor:pointer;padding:0;display:none}
-.ingrow.status-new .confirm-status,.ingrow.status-deleted .confirm-status{display:block}
+.ingrow.status-changed{background-color:#CCE5FF;border-left:3px solid #0D6EFD}
+.ingrow.status-new .confirm-status,.ingrow.status-deleted .confirm-status,.ingrow.status-changed .confirm-status{display:block}
 .ingrow.status-deleted input{opacity:0.6;cursor:not-allowed}
+/* Change-Tracking für alle Felder */
+.field-wrap{position:relative}
+.field-wrap.changed input,.field-wrap.changed textarea,.field-wrap.changed select{background:#D4EDDA;border-color:#28A745}
+.field-wrap .undo-field{display:none;position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:#28A745;color:#fff;border-radius:6px;font-size:11px;padding:3px 8px;cursor:pointer;z-index:2;white-space:nowrap}
+.field-wrap.changed .undo-field{display:block}
+/* Schritte: einzelne Zeilen trackbar */
+.step-row{display:flex;gap:6px;margin-bottom:4px;align-items:flex-start;padding:4px 6px;border-radius:8px;transition:background-color 0.2s}
+.step-row textarea{flex:1;min-height:40px;resize:vertical;font-size:14px}
+.step-row .rm{flex:0 0 34px;height:34px;border:1px solid var(--line);border-radius:6px;background:#fff;color:#B3261E;font-size:16px;cursor:pointer}
+.step-row.step-new{background-color:#D4EDDA;border-left:3px solid #28A745}
+.step-row.step-deleted{background-color:#FFF3CD;border-left:3px solid #FFC107;opacity:0.7}
+.step-row.step-changed{background-color:#CCE5FF;border-left:3px solid #0D6EFD}
+.step-row .step-undo{display:none;flex:0 0 34px;height:34px;border:none;border-radius:6px;background:#fff;color:#666;font-size:12px;cursor:pointer;padding:0}
+.step-row.step-new .step-undo,.step-row.step-deleted .step-undo,.step-row.step-changed .step-undo{display:block}
 .shoprow{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line)}
 .shoprow:last-child{border-bottom:none}
 .shoprow input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none}
@@ -248,7 +263,7 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 <header>
   <div class="brand">
     <h1>Rezeptbuch</h1>
-    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.14</button>
+    <button class="sub" id="hdSub" onclick="toggleChangelog()" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:inherit;color:inherit">v9.15</button>
   </div>
   <div class="statrow">
     <div class="stat"><div class="v" id="hRecipes">0</div><div class="l">Rezepte</div></div>
@@ -438,15 +453,15 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
     <div style="display:flex;gap:8px;margin-bottom:16px">
       <button class="btn ghost" onclick="openUrlImport()" style="flex:1">📎 Von URL importieren</button>
     </div>
-    <input id="rcName" name="rc-name" placeholder="z.B. Cordon bleu" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()">
+    <div class="field-wrap" id="wrapName"><input id="rcName" name="rc-name" placeholder="z.B. Cordon bleu" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()" oninput="trackField('rcName')"><button class="undo-field" onclick="event.stopPropagation();undoField('rcName')">↩</button></div>
     <div class="row2">
       <div><label>Kategorie</label>
-        <select id="rcCat" onclick="event.stopPropagation()"><option>Schnell</option><option>Wochenende</option><option>Beilage</option><option>Dessert</option></select>
+        <div class="field-wrap" id="wrapCat"><select id="rcCat" onclick="event.stopPropagation()" onchange="trackField('rcCat')"><option>Schnell</option><option>Wochenende</option><option>Beilage</option><option>Dessert</option></select><button class="undo-field" onclick="event.stopPropagation();undoField('rcCat')">↩</button></div>
       </div>
-      <div><label>Portionen</label><input id="rcPortions" type="number" inputmode="numeric" placeholder="4" onclick="event.stopPropagation()"></div>
+      <div><label>Portionen</label><div class="field-wrap" id="wrapPortions"><input id="rcPortions" type="number" inputmode="numeric" placeholder="4" onclick="event.stopPropagation()" oninput="trackField('rcPortions')"><button class="undo-field" onclick="event.stopPropagation();undoField('rcPortions')">↩</button></div></div>
     </div>
     <label>Zubereitungszeit (Minuten, optional)</label>
-    <input id="rcTime" type="number" inputmode="numeric" placeholder="z.B. 30" onclick="event.stopPropagation()">
+    <div class="field-wrap" id="wrapTime"><input id="rcTime" type="number" inputmode="numeric" placeholder="z.B. 30" onclick="event.stopPropagation()" oninput="trackField('rcTime')"><button class="undo-field" onclick="event.stopPropagation();undoField('rcTime')">↩</button></div>
     <label>Bild (Pfad oder URL, optional)</label>
     <div class="imgUploadBox">
       <input id="rcImg" name="rc-img" placeholder="z.B. bilder/rezept.webp" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="url" onclick="event.stopPropagation()">
@@ -456,12 +471,13 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
     <img id="rcImgPreview" class="imgPreview" alt="" hidden>
     <div class="hint" id="imgUploadHint" style="margin-top:6px"></div>
     <label>Herkunft / Quelle (optional)</label>
-    <input id="rcSrc" name="rc-src" placeholder="z.B. Betty Bossi" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()">
+    <div class="field-wrap" id="wrapSrc"><input id="rcSrc" name="rc-src" placeholder="z.B. Betty Bossi" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()" oninput="trackField('rcSrc')"><button class="undo-field" onclick="event.stopPropagation();undoField('rcSrc')">↩</button></div>
     <label>Zutaten (Menge · Einheit · Zutat)</label>
     <div id="ingRows"></div>
     <button class="btn ghost" style="margin-top:4px" onclick="addIngRow('','','','new')">+ Zutat</button>
     <label>Zubereitung</label>
-    <textarea id="rcSteps" placeholder="Schritte, Tipps, Garzeiten… (jeder Schritt auf neuer Zeile oder mit 1. 2. 3.)" autocomplete="off" autocapitalize="sentences" onclick="event.stopPropagation()"></textarea>
+    <div id="stepRows"></div>
+    <button class="btn ghost" style="margin-top:4px" onclick="addStepRow('','new')">+ Schritt</button>
     <button class="btn primary" id="rcSaveBtn" onclick="saveRecipe()">Rezept speichern</button>
     <button class="btn danger" id="rcDeleteBtn" onclick="deleteRecipe()" hidden>Rezept löschen</button>
     <button class="btn ghost" onclick="closeRecipe()">Abbrechen</button>
@@ -480,11 +496,17 @@ h3.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:upperc
 // 3. manifest.json?vX.Y (Zeile ~11) ← EASY TO FORGET!
 // If manifest.json?v is not updated, old manifest gets cached!
 
-const VERSION = '9.14';
+const VERSION = '9.15';
 // OPTIONAL: Setze deine Vercel Backend-URL hier ein (für URL-Import ohne CORS-Probleme)
 // Beispiel: const BACKEND_PROXY_URL = 'https://rezeptbuch-proxy.vercel.app/api/fetch-recipe';
 const BACKEND_PROXY_URL = 'https://rezeptbuch-iota.vercel.app/api/fetch-recipe';
 const CHANGELOG = [
+  {v:'9.15', d:'2026-11-02', items:[
+    '🎨 CHANGE-TRACKING: Alle Änderungen farblich markiert!',
+    '🟢 Grün = neu hinzugefügt, 🔵 Blau = geändert, 🟡 Gelb = gelöscht',
+    '↩ Rückgängig-Button pro Feld, Zutat und Schritt',
+    '📝 Schritte jetzt einzeln bearbeitbar (statt einer Textarea)'
+  ]},
   {v:'9.14', d:'2026-11-02', items:[
     '📸 BILD-UPLOAD ZUVERLÄSSIG: Kein 3-4x versuchen mehr!',
     '🔄 GitHub-Schreibqueue: Bild + Rezept-JSON laufen nacheinander',
@@ -1275,17 +1297,35 @@ function clearDone(){ const n=DB.shopping.filter(s=>s.done).length; if(!n){toast
 function addIngRow(q,u,n,status){
   const div=document.createElement('div'); div.className='ingrow';
   if(status) div.classList.add('status-'+status);
+  // Originalwerte für Change-Tracking speichern (nur bei bestehenden Zutaten ohne Status)
+  const isExisting=editRecipeId && !status;
   div.innerHTML='<input class="q" placeholder="500" value="'+esc(q||'')+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" onclick="event.stopPropagation()" '+(status==='deleted'?'disabled':'')+' ><input class="u" placeholder="g" value="'+esc(u||'')+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onclick="event.stopPropagation()" '+(status==='deleted'?'disabled':'')+' ><input class="n" placeholder="Zutat" value="'+esc(n||'')+'" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false" onclick="event.stopPropagation()" '+(status==='deleted'?'disabled':'')+' ><button class="rm" onclick="event.stopPropagation();markIngRowDeleted(this.parentNode)">×</button><button class="confirm-status" onclick="event.stopPropagation();confirmIngRowStatus(this.parentNode)">✓</button>';
+  if(isExisting){
+    div.dataset.origQ=q||''; div.dataset.origU=u||''; div.dataset.origN=n||'';
+    div.querySelectorAll('input').forEach(inp=>{
+      inp.addEventListener('input',()=>trackIngRow(div));
+    });
+  }
   document.getElementById('ingRows').appendChild(div);
+}
+function trackIngRow(row){
+  if(row.classList.contains('status-new')||row.classList.contains('status-deleted')) return;
+  const [qi,ui,ni]=row.querySelectorAll('input');
+  const changed=qi.value!==row.dataset.origQ || ui.value!==row.dataset.origU || ni.value!==row.dataset.origN;
+  if(changed) row.classList.add('status-changed');
+  else row.classList.remove('status-changed');
 }
 function markIngRowDeleted(row){
   if(row.classList.contains('status-deleted')){
-    // Wenn bereits gelöscht, rückgängig machen
+    // Rückgängig machen
     row.classList.remove('status-deleted');
     row.querySelectorAll('input').forEach(i=>i.disabled=false);
+    // Prüfe ob Werte noch geändert sind
+    if(row.dataset.origQ!=null) trackIngRow(row);
   }else{
     // Als gelöscht markieren
     row.classList.add('status-deleted');
+    row.classList.remove('status-changed');
     row.querySelectorAll('input').forEach(i=>i.disabled=true);
   }
 }
@@ -1296,8 +1336,128 @@ function confirmIngRowStatus(row){
     }
   }else if(row.classList.contains('status-new')){
     row.classList.remove('status-new');
+  }else if(row.classList.contains('status-changed')){
+    // Änderung rückgängig: Originalwerte wiederherstellen
+    const [qi,ui,ni]=row.querySelectorAll('input');
+    qi.value=row.dataset.origQ||''; ui.value=row.dataset.origU||''; ni.value=row.dataset.origN||'';
+    row.classList.remove('status-changed');
   }
 }
+/* ---------- Change-Tracking für Felder ---------- */
+let originalValues={};  // Originalwerte beim Öffnen eines bestehenden Rezepts
+const TRACKED_FIELDS=['rcName','rcCat','rcPortions','rcTime','rcSrc'];
+
+function trackField(fid){
+  if(!editRecipeId) return;  // Kein Tracking bei neuem Rezept
+  const el=document.getElementById(fid);
+  const wrap=document.getElementById('wrap'+fid.replace('rc',''));
+  if(!el||!wrap) return;
+  const cur=el.value;
+  const orig=originalValues[fid]||'';
+  if(cur!==orig){ wrap.classList.add('changed'); }
+  else{ wrap.classList.remove('changed'); }
+}
+function undoField(fid){
+  const el=document.getElementById(fid);
+  const wrap=document.getElementById('wrap'+fid.replace('rc',''));
+  if(!el||!wrap) return;
+  el.value=originalValues[fid]||'';
+  wrap.classList.remove('changed');
+}
+function clearFieldTracking(){
+  originalValues={};
+  TRACKED_FIELDS.forEach(fid=>{
+    const wrap=document.getElementById('wrap'+fid.replace('rc',''));
+    if(wrap) wrap.classList.remove('changed');
+  });
+}
+
+/* ---------- Schritt-Zeilen mit Change-Tracking ---------- */
+let originalSteps=[];  // Originalschritte beim Öffnen
+
+function addStepRow(text,status){
+  const div=document.createElement('div');
+  div.className='step-row';
+  if(status) div.classList.add('step-'+status);
+  const ta=document.createElement('textarea');
+  ta.placeholder='Schritt beschreiben…';
+  ta.value=text||'';
+  ta.autocomplete='off';
+  ta.autocapitalize='sentences';
+  ta.onclick=function(e){e.stopPropagation()};
+  // Change-Tracking: bei bestehendem Rezept Änderungen markieren
+  if(editRecipeId && !status){
+    const origText=text||'';
+    ta.dataset.original=origText;
+    ta.addEventListener('input',function(){
+      if(this.value!==this.dataset.original){
+        div.classList.add('step-changed');
+        undoBtn.style.display='block';
+      }else{
+        div.classList.remove('step-changed');
+        undoBtn.style.display='none';
+      }
+    });
+  }
+  const rmBtn=document.createElement('button');
+  rmBtn.className='rm';
+  rmBtn.textContent='×';
+  rmBtn.onclick=function(e){
+    e.stopPropagation();
+    toggleStepDeleted(div);
+  };
+  const undoBtn=document.createElement('button');
+  undoBtn.className='step-undo';
+  undoBtn.textContent='↩';
+  undoBtn.onclick=function(e){
+    e.stopPropagation();
+    undoStep(div);
+  };
+  div.appendChild(ta);
+  div.appendChild(rmBtn);
+  div.appendChild(undoBtn);
+  document.getElementById('stepRows').appendChild(div);
+}
+
+function toggleStepDeleted(row){
+  if(row.classList.contains('step-deleted')){
+    row.classList.remove('step-deleted');
+    row.querySelector('textarea').disabled=false;
+  }else{
+    row.classList.add('step-deleted');
+    row.classList.remove('step-changed');
+    row.querySelector('textarea').disabled=true;
+  }
+}
+
+function undoStep(row){
+  const ta=row.querySelector('textarea');
+  if(row.classList.contains('step-new')){
+    // Neuen Schritt entfernen
+    row.remove();
+    return;
+  }
+  if(row.classList.contains('step-deleted')){
+    // Löschen rückgängig
+    row.classList.remove('step-deleted');
+    ta.disabled=false;
+    return;
+  }
+  if(row.classList.contains('step-changed')){
+    // Änderung rückgängig
+    ta.value=ta.dataset.original||'';
+    row.classList.remove('step-changed');
+    return;
+  }
+}
+
+function getStepsFromRows(){
+  return [...document.querySelectorAll('#stepRows .step-row')]
+    .filter(r=>!r.classList.contains('step-deleted'))
+    .map(r=>r.querySelector('textarea').value.trim())
+    .filter(s=>s);
+}
+
 function openRecipeSheet(id){
   editRecipeId=id||null;
   pendingImg=null;
@@ -1307,15 +1467,26 @@ function openRecipeSheet(id){
   document.getElementById('recTitle').textContent=editRecipeId?'Rezept bearbeiten':'Neues Rezept';
   document.getElementById('rcSaveBtn').textContent=editRecipeId?'Änderungen speichern':'Rezept speichern';
   document.getElementById('rcDeleteBtn').hidden=!editRecipeId;
-  ['rcName','rcPortions','rcTime','rcImg','rcSrc','rcSteps'].forEach(k=>document.getElementById(k).value='');
+  ['rcName','rcPortions','rcTime','rcImg','rcSrc'].forEach(k=>document.getElementById(k).value='');
   document.getElementById('rcCat').value='Schnell';
   document.getElementById('ingRows').innerHTML='';
+  document.getElementById('stepRows').innerHTML='';
+  clearFieldTracking();
   if(editRecipeId){
     const r=recipeById(editRecipeId);
     if(r){ document.getElementById('rcName').value=r.name; document.getElementById('rcCat').value=r.cat;
       document.getElementById('rcPortions').value=r.portions||''; document.getElementById('rcTime').value=r.time||'';
-      document.getElementById('rcImg').value=r.img||''; document.getElementById('rcSrc').value=r.src||''; document.getElementById('rcSteps').value=r.steps||'';
+      document.getElementById('rcImg').value=r.img||''; document.getElementById('rcSrc').value=r.src||'';
+      // Originalwerte für Change-Tracking merken
+      originalValues={rcName:r.name||'',rcCat:r.cat||'Schnell',rcPortions:String(r.portions||''),rcTime:String(r.time||''),rcSrc:r.src||''};
+      // Schritte als einzelne Zeilen laden
+      const stepLines=(r.steps||'').split('\n').filter(s=>s.trim());
+      originalSteps=stepLines.map(s=>s.trim());
+      stepLines.forEach(s=>addStepRow(s.trim()));
       (r.ings||[]).forEach(g=>addIngRow(g.q,g.u,g.n)); }
+  }else{
+    // Bei neuem Rezept: 3 leere Schritte
+    addStepRow('','new');addStepRow('','new');addStepRow('','new');
   }
   if(!document.querySelector('#ingRows .ingrow')){ addIngRow();addIngRow();addIngRow(); }
   document.getElementById('recOverlay').classList.add('open');
@@ -1387,9 +1558,10 @@ async function importRecipeFromUrl(){
               });
             }
 
-            // Schritte
+            // Schritte als Zeilen
+            document.getElementById('stepRows').innerHTML='';
             if(recipe.steps && Array.isArray(recipe.steps)){
-              document.getElementById('rcSteps').value=recipe.steps.join('\n');
+              recipe.steps.forEach(s=>addStepRow(s,'new'));
             }
 
             toast('Rezept erfolgreich importiert - bitte prüfen und speichern!');
@@ -1521,9 +1693,10 @@ ${html.substring(0,8000)}`
       });
     }
     
-    // Schritte einfügen
+    // Schritte als Zeilen einfügen
+    document.getElementById('stepRows').innerHTML='';
     if(recipe.steps && Array.isArray(recipe.steps)){
-      document.getElementById('rcSteps').value=recipe.steps.join('\n');
+      recipe.steps.forEach(s=>addStepRow(s,'new'));
     }
     
     status.textContent='✅ Rezept importiert!';
@@ -1558,7 +1731,7 @@ async function saveRecipe(){
   const obj={ id:editRecipeId||uid(), name, cat:document.getElementById('rcCat').value,
     portions:parseInt(document.getElementById('rcPortions').value)||null,
     time:parseInt(document.getElementById('rcTime').value)||null,
-    ings, steps:document.getElementById('rcSteps').value.trim(),
+    ings, steps:getStepsFromRows().join('\n'),
     img, src:document.getElementById('rcSrc').value.trim() };
   if(editRecipeId){ const i=DB.recipes.findIndex(r=>r.id===editRecipeId); DB.recipes[i]=obj; }
   else DB.recipes.push(obj);
@@ -1858,7 +2031,11 @@ function fillFormFromAi(o){
   const cats=['Schnell','Wochenende','Beilage','Dessert'];
   if(o.cat&&cats.includes(o.cat)) document.getElementById('rcCat').value=o.cat;
   set('rcPortions',o.portions); set('rcTime',o.time); set('rcSrc',o.src);
-  if(o.steps) document.getElementById('rcSteps').value=o.steps;
+  if(o.steps){
+    document.getElementById('stepRows').innerHTML='';
+    const lines=Array.isArray(o.steps)?o.steps:String(o.steps).split('\n');
+    lines.filter(s=>s.trim()).forEach(s=>addStepRow(s.trim(),'new'));
+  }
   if(Array.isArray(o.ings)&&o.ings.length){
     document.getElementById('ingRows').innerHTML='';
     o.ings.forEach(g=>addIngRow(g&&g.q||'', g&&g.u||'', g&&g.n||''));
@@ -2162,7 +2339,7 @@ if(ghReady()) pullFromGitHub(false);
 else if(DB.src) syncFromSource(false);
 
 /* Service Worker für Installierbarkeit + Offline + Auto-Update + DEBUG */
-console.log('🍳 Rezeptbuch v9.14 - Backend Proxy Support - DEBUG MODE AKTIV');
+console.log('🍳 Rezeptbuch v9.15 - Backend Proxy Support - DEBUG MODE AKTIV');
 console.log('Browser supports Service Worker:', 'serviceWorker' in navigator);
 console.log('Current location:', window.location.href);
 
