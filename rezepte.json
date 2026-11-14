@@ -243,7 +243,7 @@
       "name": "Tiramisu",
       "cat": "Dessert",
       "portions": 4,
-      "img": "bilder/tiramisu.jpg",
+      "time": 30,
       "ings": [
         {
           "q": "50",
@@ -301,7 +301,7 @@
           "n": "Kaffeelikör (z.B. Tia Maria)"
         },
         {
-          "q": "150",
+          "q": "200",
           "u": "g",
           "n": "Löffelbiskuits"
         },
@@ -311,8 +311,8 @@
           "n": "Schokolade- oder Kakaopulver zum Bestäuben"
         }
       ],
-      "steps": "Form: weite Form von ca. 2 Litern.\n\n1. Mascarpone-Creme: Zucker und Eigelbe gut verrühren, bis die Masse hell ist. Mascarpone sowie Zitronen- und Orangenschale darunterrühren. Eiweisse mit Salz steif schlagen, 1 EL Zucker beigeben und kurz weiterschlagen, bis der Eischnee glänzt. Sorgfältig unter die Mascarpone-Masse ziehen, zugedeckt kühl stellen.\n\n2. Tränkflüssigkeit: Heissen Kaffee mit Zucker verrühren, bis er sich aufgelöst hat. Kaffeelikör beigeben, auskühlen.\n\n3. Einfüllen: Mit der Hälfte der Biskuits den Boden der Form belegen, die Hälfte der Flüssigkeit darüberträufeln, die Hälfte der Creme darauf verteilen. Restliche Biskuits in die Flüssigkeit tauchen, darauflegen, mit restlicher Creme bedecken, glatt streichen. Mind. 2 Std. kühl stellen. Vor dem Servieren mit Schokolade- oder Kakaopulver bestäuben.\n\nHinweis: Resten von Desserts mit rohen Eiern nie aufbewahren. Tipp: Statt Kaffeelikör 5 EL Rum oder Cognac verwenden, dann den Kaffee mit 3 EL Zucker verrühren.\n\nZubereitung: ca. 30 Min. + 2 Std. kühl stellen.",
-      "time": 30,
+      "steps": "Form: weite Form von ca. 2 Litern. Kleine eckige Auflaufform.\n1. Mascarpone-Creme: Zucker und Eigelbe gut verrühren, bis die Masse hell ist. Mascarpone sowie Zitronen- und Orangenschale darunterrühren. Eiweisse mit Salz steif schlagen, 1 EL Zucker beigeben und kurz weiterschlagen, bis der Eischnee glänzt. Sorgfältig unter die Mascarpone-Masse ziehen, zugedeckt kühl stellen.\n2. Tränkflüssigkeit: Heissen Kaffee mit Zucker verrühren, bis er sich aufgelöst hat. Kaffeelikör beigeben, auskühlen.\n3. Einfüllen: Mit der Hälfte der Biskuits den Boden der Form belegen, die Hälfte der Flüssigkeit darüberträufeln, die Hälfte der Creme darauf verteilen. Restliche Biskuits in die Flüssigkeit tauchen (oder in der Form beträufeln), darauflegen, mit restlicher Creme bedecken, glatt streichen. Mind. 2 Std. kühl stellen. Vor dem Servieren mit Schokolade- oder Kakaopulver bestäuben.\nHinweis: Resten von Desserts mit rohen Eiern nie aufbewahren. Tipp: Statt Kaffeelikör 5 EL Rum oder Cognac verwenden, dann den Kaffee mit 3 EL Zucker verrühren.\nZubereitung: ca. 30 Min. + 2 Std. kühl stellen.",
+      "img": "bilder/tiramisu.jpg",
       "src": "Betty Bossi"
     },
     {
