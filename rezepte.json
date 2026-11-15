@@ -11838,6 +11838,67 @@
       "steps": "1. Risotto mit Parmesan und Eigelb mischen. Und kneten\n2. Für die Füllung Mozzarella und Schinken in Würfelchen schneiden und mischen.\n3. Ei verquirlen, mit Salz und Pfeffer würzen. Paniermehl in einen Teller geben.\n4. Ca. 3 EL Reismasse auf nasser Handfläche flachdrücken. Ca. 1 EL Füllung daraufgeben, mit Reismasse ummanteln und zu einer festen Kugel formen. Reiskugeln zuerst im Ei, dann im Paniermehl wenden, Panade gut andrücken. Mit restlicher Masse gleich verfahren.\n5. Öl in einer Fritteuse oder einer hohen Pfanne auf ca. 170 °C erhitzen. Arancini portionenweise ca. 4 Minuten goldbraun frittieren. Mit der Schaumkelle herausheben und auf Haushaltspapier abtropfen lassen. Kalt oder warm servieren. Dazu passt Tomatensauce, z. B. mit frischen Kräutern.\nNährwerte pro Person: Eiweiss 15 g, Fett 21 g, Kohlenhydrate 39 g, 410 kcal\nTipp: Für die Arancini sind Risotto-Resten bestens geeignet. Statt Resten zu verwerten, kann man auch 125 g Express-Safranrisotto (Beutel) kochen und nach dem Auskühlen dafür verwenden.",
       "img": "bilder/arancini-mit-mozzarella.webp",
       "src": "https://migusto.migros.ch/de/rezepte/arancini-mit-mozzarella"
+    },
+    {
+      "name": "Gefüllte Zucchini mit Hackfleisch und Käse",
+      "cat": "Wochenende",
+      "portions": 4,
+      "time": 55,
+      "ings": [
+        {
+          "q": "4",
+          "u": "Stück",
+          "n": "Zucchini, gross, halbiert"
+        },
+        {
+          "q": "500",
+          "u": "g",
+          "n": "Hackfleisch (Rind oder gemischt)"
+        },
+        {
+          "q": "1",
+          "u": "Stück",
+          "n": "Zwiebel, fein gehackt"
+        },
+        {
+          "q": "2",
+          "u": "Stück",
+          "n": "Knoblauchzehen, fein gehackt"
+        },
+        {
+          "q": "400",
+          "u": "g",
+          "n": "Pelati (gehackte Tomaten, aus der Dose)"
+        },
+        {
+          "q": "2",
+          "u": "EL",
+          "n": "Olivenöl"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "getrockneter Oregano"
+        },
+        {
+          "q": "150",
+          "u": "g",
+          "n": "Mozzarella oder Reibkäse, gerieben"
+        },
+        {
+          "q": "1",
+          "u": "Bund",
+          "n": "frischer Oregano oder Basilikum"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salz, Pfeffer"
+        }
+      ],
+      "steps": "1. Den Backofen auf 200 °C Ober-/Unterhitze vorheizen.\n2. Die Zucchini längs halbieren und das Innere mit einem Löffel aushöhlen. Das Fruchtfleisch grob hacken und beiseitelegen.\n3. Olivenöl in einer Pfanne erhitzen. Zwiebel und Knoblauch darin glasig dünsten. Das Hackfleisch dazugeben und krümelig anbraten.\n4. Das gehackte Zucchini-Fruchtfleisch sowie die Pelati unterrühren. Mit Salz, Pfeffer und getrocknetem Oregano würzen. Die Sauce ca. 10 Minuten köcheln lassen, bis sie eindickt.\n5. Die Zucchinihälften in eine ofenfeste Form legen und mit der Hackfleischsauce füllen.\n6. Den geriebenen Käse gleichmässig über die gefüllten Zucchini verteilen.\n7. Im vorgeheizten Ofen ca. 20–25 Minuten backen, bis der Käse goldbraun überbacken ist.\n8. Die gefüllten Zucchini aus dem Ofen nehmen, mit frischen Oregano- oder Basilikumblättern garnieren und sofort servieren.",
+      "img": "bilder/gefuellte-zucchini-mit-hackfleisch-und-kaese.webp",
+      "src": ""
     }
   ]
 }
