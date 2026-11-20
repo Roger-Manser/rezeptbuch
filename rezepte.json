@@ -11995,6 +11995,92 @@
       "steps": "1. Zucchetti längs halbieren, Inneres mit einem Esslöffel herauslösen, dieses fein hacken und beiseitestellen. Eine Gratinform mit Butter einfetten, die Zucchettihälften hineinlegen, mit Olivenöl bestreichen und salzen.\n2. Zwiebel fein hacken. Öl in einer beschichteten Bratpfanne erhitzen. Zwiebel, Hackfleisch und das beiseitegestellte Zucchettiinnere beigeben, Knoblauch dazupressen und ca. 2 Minuten anbraten. Oregano fein schneiden, mit dem Tomatenpüree beigeben, alles mischen und mit Paprika, Pfeffer und Salz würzen. Pfanne von der Platte nehmen.\n3. Tomaten in Würfeli schneiden, Mandeln grob hacken, beides zur Füllung geben und mischen.\n4. Füllung gleichmässig in die Zucchettihälften verteilen. Gruyère an der Röstiraffel reiben und auf den gefüllten Zucchetti verteilen.\n5. Ca. 35 Minuten in der Mitte des auf 200 °C vorgeheizten Ofens backen. Herausnehmen, Oreganoblättchen abzupfen und darüber streuen.\nNährwerte: ca. 439 kcal pro Person.",
       "img": "bilder/gefuellte-zucchetti-mit-hackfleisch-2.webp",
       "src": "little.fooby.ch"
+    },
+    {
+      "name": "Pouletgratin",
+      "cat": "Wochenende",
+      "portions": 4,
+      "time": 80,
+      "ings": [
+        {
+          "q": "6",
+          "u": "Stück",
+          "n": "fest kochende Kartoffeln"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salzwasser, siedend"
+        },
+        {
+          "q": "50",
+          "u": "g",
+          "n": "Frischkäse mit Pfeffer (Boursin)"
+        },
+        {
+          "q": "75",
+          "u": "g",
+          "n": "Mascarpone"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "Salz, nach Bedarf"
+        },
+        {
+          "q": "4",
+          "u": "Stück",
+          "n": "Pouletbrüstli (je ca. 160 g)"
+        },
+        {
+          "q": "0.25",
+          "u": "TL",
+          "n": "Salz"
+        },
+        {
+          "q": "",
+          "u": "",
+          "n": "wenig Pfeffer"
+        },
+        {
+          "q": "1",
+          "u": "TL",
+          "n": "Maizena"
+        },
+        {
+          "q": "2",
+          "u": "EL",
+          "n": "trockener Sherry oder Cognac"
+        },
+        {
+          "q": "2.5",
+          "u": "dl",
+          "n": "Rahm"
+        },
+        {
+          "q": "1",
+          "u": "Dose",
+          "n": "gehackte Tomaten (ca. 400 g)"
+        },
+        {
+          "q": "1",
+          "u": "Bund",
+          "n": "glattblättrige Petersilie"
+        },
+        {
+          "q": "0.5",
+          "u": "EL",
+          "n": "eingelegte grüne Pfefferkörner"
+        },
+        {
+          "q": "0.25",
+          "u": "TL",
+          "n": "Salz"
+        }
+      ],
+      "steps": "1. Ofen auf 200 Grad vorheizen. Kartoffeln im siedenden Salzwasser ca. 20 Min. weich kochen. Wasser abgiessen, Kartoffeln noch heiss schälen und etwas abkühlen lassen. 4 Kartoffeln beiseite legen, den Rest an der Röstiraffel in eine Schüssel reiben.\n2. Frischkäse und Mascarpone mit den geriebenen Kartoffeln mischen und salzen. Bei den Pouletbrüstli mit einem spitzen Messer seitlich eine Tasche einschneiden, mit der Kartoffelmasse füllen und mit Zahnstochern verschliessen. Würzen und in die gefettete Gratinform (ca. 1½ Liter) legen.\n3. Maizena mit Sherry anrühren, mit Rahm und gehackten Tomaten (Pelati) in einer Pfanne unter Rühren aufkochen. Petersilie grob schneiden, Pfefferkörner abtropfen, beides beigeben und würzen. Sauce über die Pouletbrüstli giessen. Die beiseite gestellten Kartoffeln in Scheiben schneiden und ziegelartig neben die Pouletbrüstli legen.\n4. Gratin ca. 30 Min. in der Mitte des vorgeheizten Ofens backen.\nNährwerte pro Portion: 653 kcal, Fett 36 g, Kohlenhydrate 39 g, Eiweiss 43 g.\nTipp: Grüne Pfefferkörner durch frische, in Streifen geschnittene Chilis ersetzen. Lässt sich vorbereiten: Gratin ca. ½ Tag im Voraus ofenfertig zubereiten und in der Form zugedeckt im Kühlschrank aufbewahren.",
+      "img": "",
+      "src": "Betty Bossi – bettybossi.ch"
     }
   ]
 }
